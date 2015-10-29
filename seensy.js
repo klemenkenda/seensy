@@ -1,4 +1,4 @@
 ﻿var qm = require('qminer');
 
-console.log('Hello world!');
+console.log('Hello world!!!');
 
