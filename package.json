@@ -1,0 +1,10 @@
+{
+  "name": "Seensy",
+  "version": "0.0.0",
+  "description": "Seensy",
+  "main": "app.js",
+  "author": {
+    "name": "Klemen Kenda",
+    "email": "klemen.kenda@ijs.si"
+  }
+}
