@@ -8,3 +8,4 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq uuid-dev
   - sudo apt-get install build-essential
+  - npm install -g mocha
