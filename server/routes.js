@@ -5,7 +5,10 @@ function setup(app, handlers) {
     app.get('/', handlers.service.handleGetRouterPaths.bind(handlers.service));
 
     // http://localhost:XYZ/close-base
-    app.get('/close-base', handlers.service.handleCloseBase.bind(handlers.service));    
+    app.get('/close-base', handlers.service.handleCloseBase.bind(handlers.service));
+    
+    // http://localhost:XYZ/exit
+    app.get('/exit', handlers.service.handleExit.bind(handlers.service));   
 }
 
 exports.setup = setup;

@@ -35,4 +35,12 @@ DataHandler.prototype.handleCloseBase = function (req, res) {
     }
 }
 
+// exit
+DataHandler.prototype.handleExit = function (req, res) {
+    this.handleCloseBase(req, res);
+    // TODO - is this OK???
+    process.on('exit', function () { process.exit(0); });
+    process.exit(1);
+}
+
 module.exports = DataHandler;

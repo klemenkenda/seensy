@@ -14,7 +14,7 @@ function cleanCreateMode() {
     return base;
 }
 
-// create base in oPEN mode
+// create base in open mode
 function openMode() {
     var base = new qm.Base({
         mode: 'open',
