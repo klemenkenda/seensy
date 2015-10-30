@@ -8,8 +8,8 @@
 *.ntvs_analysis.dat
 
 # Run-time results
-db/
-server/logs/
+db/*
+server/logs/*
 
 # Build results
 [Dd]ebug/
