@@ -16,9 +16,9 @@ var m1 = new DataManagement()
 m1.setupRoutes(server.app)
 
 // Use module2
-var Models = require('./module2.js')
-var m1 = new Models()
-m1.setupRoutes(server.app)
+//var Models = require('./module2.js')
+//var m1 = new Models()
+//m1.setupRoutes(server.app)
 
 // start server
 server.start(config.dataService.server.port);
