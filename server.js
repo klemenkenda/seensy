@@ -1,7 +1,5 @@
-var routes = require('./routes.js');
 var bodyParser = require('body-parser');
-var DataHandler = require('./handlers/data.js');
-var logger = require('../modules/logger/logger.js');
+var logger = require('./modules/logger/logger.js');
 var express = require('express');
 var app = express();
 

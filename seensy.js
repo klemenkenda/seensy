@@ -1,5 +1,5 @@
 ﻿var qm = require('qminer');
-var server = require('./server/server.js');
+var server = require('./server.js');
 var createBase = require('./schema/create.js');
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config.json')[env];
