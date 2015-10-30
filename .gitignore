@@ -21,6 +21,8 @@ node_modules/
 !packages/*/build/
 
 # MSTest test Results
+logs/
+db/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 

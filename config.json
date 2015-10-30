@@ -1,0 +1,43 @@
+{
+    "development": {
+        "dataService": {
+            "server": {
+				"root": "http://localhost:9611",
+                "port": 9611
+            }
+        },
+        "admins": {            
+            "admin": { "password": "admin" }
+        },
+        "logger": {
+            "console": { "level": "debug" }
+        }
+    },
+    
+    "production": {
+        "dataService": {
+            "server": {
+				"root": "http://localhost:9612",
+                "port": 9612
+            }
+        }, 
+        "logger": {
+            "console": { "level": "info" }
+        }
+    },
+
+	"test": {
+        "dataService": {
+            "server": {
+				"root": "http://localhost:9613",
+                "port": 9613
+            }
+        }, 
+		"admins": {
+            "test": { "password": "test" }
+        },
+        "logger": {
+            "console": { "level": "error" }
+        }
+    }
+}
