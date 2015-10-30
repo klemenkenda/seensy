@@ -7,8 +7,11 @@
 *.sln.docstates
 *.ntvs_analysis.dat
 
-# Build results
+# Run-time results
+db/
+logs/
 
+# Build results
 [Dd]ebug/
 [Rr]elease/
 x64/
@@ -21,8 +24,6 @@ node_modules/
 !packages/*/build/
 
 # MSTest test Results
-server/logs/
-schema/db/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
