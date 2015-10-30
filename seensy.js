@@ -1,4 +1,5 @@
-﻿var qm = require('qminer');
+﻿var logger = require('./modules/logger/logger.js');
+var qm = require('qminer');
 var server = require('./server/server.js');
 var createBase = require('./schema/create.js');
 var env = process.env.NODE_ENV || 'development';
