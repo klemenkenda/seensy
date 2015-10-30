@@ -22,7 +22,7 @@ node_modules/
 
 # MSTest test Results
 logs/
-db/
+schema/db/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
