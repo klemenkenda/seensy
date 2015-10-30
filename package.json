@@ -2,7 +2,7 @@
   "name": "Seensy",
   "version": "0.0.1",
   "description": "Seensy",
-  "main": "app.js",
+  "main": "seensy.js",
   "author": {
     "name": "Klemen Kenda",
     "email": "klemen.kenda@ijs.si"
@@ -12,11 +12,16 @@
     "url": "https://github.com/klemenkenda/seensy"
   },
   "scripts": {
-    "start": "set NODE_ENV=development&& node index.js",
+    "start": "set NODE_ENV=development&& node seensy.js",
     "test": "set NODE_ENV=test&& mocha"
   },
   "dependencies": {
-    "qminer": "^3.0.0"
+    "qminer": "^3.0.0",
+    "body-parser": "^1.14.0",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "request": "^2.62.0",
+    "winston": "^1.0.1"
   },
   "devDependencies": {
     "mocha": "^2.2.4",
