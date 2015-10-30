@@ -12,4 +12,5 @@ var base = createBase.mode(scriptArgs);
 
 // start server
 server.init(base);
+logger.info("\x1b[32m[Data] Service started at 'http://localhost:%d'\n\x1b[0m", config.dataService.server.port)
 server.start(config.dataService.server.port);
