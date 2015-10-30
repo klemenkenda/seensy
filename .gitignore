@@ -9,7 +9,7 @@
 
 # Run-time results
 db/
-logs/
+server/logs/
 
 # Build results
 [Dd]ebug/
