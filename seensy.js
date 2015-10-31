@@ -13,7 +13,7 @@ var base = createBase.mode(scriptArgs);
 
 // data module instance
 var DataModule = require('./server/dataModule.js');
-var dataModule = new DataModule(server.app);
+var dataModule = new DataModule(server.app, base);
 dataModule.setupRoutes(server.app);
 
 // modeling module
