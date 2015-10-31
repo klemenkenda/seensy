@@ -11,17 +11,17 @@ qm.verbosity(0);
 var scriptArgs = (process.argv[2] == null) ? "cleanCreate" : process.argv[2];
 var base = createBase.mode(scriptArgs);
 
-// Use module1
-var DataManagement = require('./module1.js')
-var m1 = new DataManagement()
-m1.setupRoutes(server.app)
+// data module instance
+var DataModule = require('./server/dataModule.js');
+var dataModule = new DataModule(server.app);
+dataModule.setupRoutes(server.app);
 
-// Use module2
-//var Models = require('./module2.js')
-//var m1 = new Models()
-//m1.setupRoutes(server.app)
+// modeling module
+// var ModelModule = require('./modelModule.js')
+// var modelModule = new ModelModule()
+// modelModule.setupRoutes(server.app)
 
 // start server
+// TODO: do we need to pass base or can we use it globally?
 // server.init(base);
-logger.info("\x1b[32m[Data] Service started at 'http://localhost:%d'\n\x1b[0m", config.dataService.server.port)
 server.start(config.dataService.server.port);
