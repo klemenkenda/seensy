@@ -9,7 +9,7 @@ var QMinerHandler = require('./handlers/qminer.js');
 var ModelHandler = require('./handlers/model.js');
 
 function DataModule(app, base) {
-    logger.info('Data Module - INIT');
+    logger.debug('Data Module - INIT');
     this.generalHandler = new GeneralHandler(app);
     this.qminerHandler = new QMinerHandler(app, base);
     // this.dataHandler = new DataHandler(app);

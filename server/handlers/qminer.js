@@ -3,7 +3,7 @@ var qm = require('qminer');
 var logger = require('../../modules/logger/logger.js');
 
 function QMinerHandler(app, base) {
-    logger.info('QMiner handler - INIT');
+    logger.debug('QMiner handler - INIT');
     this.app = app;
     this.base = base;
     this.namespace = '/qm/';
