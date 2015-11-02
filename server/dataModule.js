@@ -12,14 +12,14 @@ function DataModule(app, base) {
     logger.debug('Data Module - INIT');
     this.generalHandler = new GeneralHandler(app);
     this.qminerHandler = new QMinerHandler(app, base);
-    // this.dataHandler = new DataHandler(app);
-    // this.modelHandler = new ModelHandler(app);    
+    this.dataHandler = new DataHandler(app, base);
+    // this.modelHandler = new ModelHandler(app);
 }
 
 DataModule.prototype.setupRoutes = function (app) {
     // handler's setups    
     this.generalHandler.setupRoutes(app);
-    // this.dataHandler.setupRoutes(app);
+    this.dataHandler.setupRoutes(app);
     this.qminerHandler.setupRoutes(app);
     // this.modelHandler.setupRoutes(app);
     
