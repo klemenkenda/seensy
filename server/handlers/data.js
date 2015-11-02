@@ -29,6 +29,25 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
         node.Position[1] = data[i].node.lng;
 
         var nodeid = this.base.store("Node").push(node);
+
+        var measurements = data[i].node.measurements;
+        for (j = 0; j < measurements.length; j++) {
+            // Parse and store type information
+            var type = new Object();
+            type.Name = measurements[j].type.name;
+            type.Phenomena = measurements[j].type.phenomenon;
+            type.UoM = measurements[j].type.UoM;
+
+            var typeid = this.base.store("Type").push(type);
+
+            // Parse and store node information
+            var sensor = new Object();
+            sensor.Name = measurements[j].sensorid;
+            sensor.NodeId = nodeid;
+            sensor.TypeId = typeid;
+
+            var sensorid = this.base.store("Sensor").push(sensor);
+        }
     }
 
     res.type('json').status(200).json({'done' : 'well'}).end();
