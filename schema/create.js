@@ -65,7 +65,7 @@ function createBase(mode) {
     var base = modes[mode]();
     base["mode"] = mode;
     
-    logger.info("\x1b[32m[Model] Service started in '%s' mode\n\x1b[0m", mode);
+    logger.info("\x1b[32m[Data] Base opened in '%s' mode\n\x1b[0m", mode);
     
     return base;
 }

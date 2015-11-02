@@ -17,7 +17,7 @@ GeneralHandler.prototype.handleGetRouterPaths = function (req, res) {
             routerPaths.push({ "path": item.route.path, "methods": item.route.methods });
         }
     });
-    res.json(routerPaths);
+    res.type('json').status(200).json(routerPaths).end();
 }
 
 GeneralHandler.prototype.setupRoutes = function (app) {

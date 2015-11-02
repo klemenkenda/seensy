@@ -11,6 +11,9 @@ qm.verbosity(0);
 var scriptArgs = (process.argv[2] == null) ? "cleanCreate" : process.argv[2];
 var base = createBase.mode(scriptArgs);
 
+// TODO: do we need to pass base or can we use it globally?
+server.init();
+
 // data module instance
 var DataModule = require('./server/dataModule.js');
 var dataModule = new DataModule(server.app, base);
@@ -22,6 +25,4 @@ dataModule.setupRoutes(server.app);
 // modelModule.setupRoutes(server.app)
 
 // start server
-// TODO: do we need to pass base or can we use it globally?
-// server.init(base);
 server.start(config.dataService.server.port);

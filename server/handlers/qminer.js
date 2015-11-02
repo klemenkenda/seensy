@@ -14,10 +14,10 @@ QMinerHandler.prototype.setupRoutes = function (app) {
     // stores - get stores JSON
     app.get(this.namespace + 'stores', this.handleStores.bind(this));
     // record - get record from the store
-    app.get(this.namespace + 'record/:store/:id', this.handleRecord.bind(this));
+    app.get(this.namespace + 'record/:store/:id', this.handleRecord.bind(this));    
 }
 
-QMinerHandler.prototype.handleStores = function (req, res) {
+QMinerHandler.prototype.handleStores = function (req, res) {    
     var stores = this.base.getStoreList();
     res.type('json').status(200).json(stores).end();
 }
