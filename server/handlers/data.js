@@ -47,12 +47,47 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
             sensor.TypeId = typeid;
 
             var sensorid = this.base.store("Sensor").push(sensor);
+            
+            // Create names for additional stores
+            var measurementStoreStr = "M" + nameFriendly(sensor.Name);
+            var aggregateStoreStr = "A" + nameFriendly(sensor.Name);
+            var resampledStoreStr = "R" + nameFriendly(sensor.Name);
+
+            var measurementStore = this.base.store(measurementStoreStr);
+            
+            // If the store does not exist
+            if (measurementStore == null) {
+                // Create Measumerment Store names 'M-sensorname'
+                measurementStore = this.base.createStore([{
+                        "name": measurementStoreStr,
+                        "fields": [
+                            { "name": "Time", "type": "datetime" },
+                            { "name": "Date", "type": "string" },
+                            { "name": "Val", "type": "float" }
+                        ],
+                        "joins": [],
+                        "keys": [
+                            { "field": "Date", "type": "value", "sort": "string", "vocabulary": "date_vocabulary" }
+                        ]
+                    }]);
+            }
+
+            // Parse and store measurement
+            var measurement = new Object();
+            measurement.Val = Number(measurements[j].value);
+            measurement.Time = measurements[j].timestamp;
+            measurement.Date = measurements[j].timestamp.substr(0, 10);
+            
+            logger.debug('[AddMeasurement] ' + '{ "Val": ' + measurement.Val + ', "Time": "' + measurement.Time + '", "Date": "' + measurement.Date + '"}');
+            measurementStore.push(measurement);
         }
     }
 
     res.type('json').status(200).json({'done' : 'well'}).end();
 }
 
-
+function nameFriendly(myName) {
+    return myName.replace(/\W/g, '');
+}
 
 module.exports = DataHandler;
