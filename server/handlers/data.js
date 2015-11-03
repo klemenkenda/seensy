@@ -388,9 +388,9 @@ DataHandler.prototype.getMeasurement = function (sensorName, startDate, endDate)
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.handleGetMeasurement = function (req, res) {
-    var sensorName = req.query.name;
-    var startDate = req.query.startdate;
-    var endDate = req.query.enddate;
+    var sensorName = req.query.sensorName;
+    var startDate = req.query.startDate;
+    var endDate = req.query.endDate;
 
     var data = this.getMeasurement(sensorName, startDate, endDate);
     res.status(200).json(data);
@@ -403,14 +403,14 @@ DataHandler.prototype.handleGetMeasurement = function (req, res) {
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.handleNGetMeasurement = function (req, res) {
-    var sensorListStr = req.query.name;
+    var sensorListStr = req.query.sensorNames;
     var sensorList = sensorListStr.split(",");
     var dataObj = [];
     logger.debug('[NGetMeasurement] ' + sensorList);
 
     // Dates
-    var startDate = req.query.startdate;
-    var endDate = req.query.enddate;
+    var startDate = req.query.startDate;
+    var endDate = req.query.endDate;
 
     for (var i = 0; i < sensorList.length; i++) {
         var sensorName = sensorList[i];
