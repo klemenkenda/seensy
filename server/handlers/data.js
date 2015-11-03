@@ -18,6 +18,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'get-aggregate-store-structure', this.handleGetAggregateStoreStructure.bind(this));
     // get-current-aggregates - get last aggregates from aggregate store
     app.get(this.namespace + 'get-current-aggregates', this.hangleGetCurrentAggregates.bind(this));
+    // get-nodes - Get information on nodes and their sensors
+    app.get(this.namespace + 'get-nodes', this.hangleGetNodes.bind(this));
 }
 
 /**
@@ -201,7 +203,7 @@ DataHandler.prototype.getAggregateStoreStructure = function (aggregateStoreStr) 
  * @param req  {model:express~Request}   Request
  * @param res  {model:express~Response}  Response  
  */
-DataHandler.prototype.hangleGetCurrentAggregates = function (req, res){
+DataHandler.prototype.hangleGetCurrentAggregates = function (req, res) {
     var measurementStoreStr = "M" + nameFriendly(req.query.sid);
     var measurementStore = this.base.store(measurementStoreStr);
     var data = this.getCurrentAggregates(measurementStore);
@@ -242,7 +244,63 @@ DataHandler.prototype.getCurrentAggregates = function(measurementStore) {
     });
     
     return data;
-};
+}
+
+/**
+ *  Get all the nodes and their information
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.hangleGetNodes = function (req, res) {
+    var str;
+    var recSet = this.base.store('Node').allRecords;
+    
+    str = '[\n';
+    for (var i = 0; i < recSet.length; i++) {
+        str += '  {\n';
+        str += '    "Name": "' + recSet[i].Name + '",\n';
+        str += '    "Position": [' + recSet[i].Position + '],\n';
+        str += '    "Sensors": [\n';
+        
+        var recTypeSet = this.base.store("Type");
+        
+        // Get all the sensors for this node
+        sensorSet = recSet[i].hasSensor.store.allRecords;
+
+        for (var j = 0; j < sensorSet.length; j++) {
+            
+            var measurementStoreStr = "M" + nameFriendly(String(sensorSet[j].Name));
+            measurementStore = this.base.store(measurementStoreStr);
+            
+            var startDate, endDate, val;
+            if ((measurementStore != null) && (measurementStore.empty == false)) {
+                startDate = measurementStore.first.Date;
+                endDate = measurementStore.last.Date;
+                val = measurementStore.last.Val;
+            } else {
+                startDate = "0000-00-00";
+                endDate = "0000-00-00";
+                val = -999.999;
+            }
+
+            str += '      {\n';
+            str += '        "Name":"' + sensorSet[j].Name + '",\n';
+            str += '        "Phenomenon":"' + sensorSet[j].Type.Phenomena + '",\n';
+            str += '        "UoM":"' + sensorSet[j].Type.UoM + '",\n';
+            str += '        "StartDate":"' + startDate + '",\n';
+            str += '        "EndDate":"' + endDate + '",\n';
+            str += '        "Val":"' + val + '"\n';
+            str += '      }';
+        }
+
+        str += '\n    ]\n'
+        str += '  }';
+        if (i != recSet.length - 1) str += ',\n';
+    }
+    str += "\n]";
+    res.status(200).send(str);
+}
 
 /**
  * Modify string to alpha numeric
