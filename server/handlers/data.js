@@ -320,6 +320,7 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
         if (i != recSet.length - 1) str += ',\n';
     }
     str += "\n]";
+    console.log(str);
     res.status(200).send(str);
 }
 
@@ -327,6 +328,7 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
  *  Get measurements from specified store
  *
  * @param req  {model:express~Request}   Request
+ *   TODO: describe parameters within the request
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.handleGetMeasurement = function (req, res) {
