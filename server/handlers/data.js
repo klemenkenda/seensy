@@ -263,11 +263,9 @@ DataHandler.prototype.hangleGetNodes = function (req, res) {
         str += '    "Position": [' + recSet[i].Position + '],\n';
         str += '    "Sensors": [\n';
         
-        var recTypeSet = this.base.store("Type");
-        
         // Get all the sensors for this node
         sensorSet = recSet[i].hasSensor.store.allRecords;
-
+        
         for (var j = 0; j < sensorSet.length; j++) {
             
             var measurementStoreStr = "M" + nameFriendly(String(sensorSet[j].Name));
@@ -284,6 +282,7 @@ DataHandler.prototype.hangleGetNodes = function (req, res) {
                 val = -999.999;
             }
 
+            if (j > 0) str += ',\n';
             str += '      {\n';
             str += '        "Name":"' + sensorSet[j].Name + '",\n';
             str += '        "Phenomenon":"' + sensorSet[j].Type.Phenomena + '",\n';
