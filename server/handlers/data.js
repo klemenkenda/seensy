@@ -17,11 +17,11 @@ DataHandler.prototype.setupRoutes = function (app) {
     // get-aggregate-store-structure - get the definition of aggregate store
     app.get(this.namespace + 'get-aggregate-store-structure', this.handleGetAggregateStoreStructure.bind(this));
     // get-current-aggregates - get last aggregates from aggregate store
-    app.get(this.namespace + 'get-current-aggregates', this.hangleGetCurrentAggregates.bind(this));
+    app.get(this.namespace + 'get-current-aggregates', this.handleGetCurrentAggregates.bind(this));
     // get-nodes - Get information on nodes and their sensors
-    app.get(this.namespace + 'get-nodes', this.hangleGetNodes.bind(this));
+    app.get(this.namespace + 'get-nodes', this.handleGetNodes.bind(this));
     // get-measurement - Get measurements from specified store during dates
-    app.get(this.namespace + 'get-measurement', this.hangleGetMeasurement.bind(this));
+    app.get(this.namespace + 'get-measurement', this.handleGetMeasurement.bind(this));
 }
 
 /**
@@ -222,7 +222,7 @@ DataHandler.prototype.getAggregateStoreStructure = function (aggregateStoreStr) 
  * @param req  {model:express~Request}   Request
  * @param res  {model:express~Response}  Response  
  */
-DataHandler.prototype.hangleGetCurrentAggregates = function (req, res) {
+DataHandler.prototype.handleGetCurrentAggregates = function (req, res) {
     var measurementStoreStr = "M" + nameFriendly(req.query.sid);
     var measurementStore = this.base.store(measurementStoreStr);
     var data = this.getCurrentAggregates(measurementStore);
@@ -271,7 +271,7 @@ DataHandler.prototype.getCurrentAggregates = function(measurementStore) {
  * @param req  {model:express~Request}   Request
  * @param res  {model:express~Response}  Response  
  */
-DataHandler.prototype.hangleGetNodes = function (req, res) {
+DataHandler.prototype.handleGetNodes = function (req, res) {
     var recSet = this.base.store('Node').allRecords;
     
     var str = '[\n';
@@ -329,7 +329,7 @@ DataHandler.prototype.hangleGetNodes = function (req, res) {
  * @param req  {model:express~Request}   Request
  * @param res  {model:express~Response}  Response  
  */
-DataHandler.prototype.hangleGetMeasurement = function (req, res) {
+DataHandler.prototype.handleGetMeasurement = function (req, res) {
     var sensorName = req.query.name;
     var startDate = req.query.startdate;
     var endDate = req.query.enddate;
