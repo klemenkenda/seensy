@@ -22,6 +22,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'get-nodes', this.handleGetNodes.bind(this));
     // get-measurement - Get measurements from specified store during dates
     app.get(this.namespace + 'get-measurement', this.handleGetMeasurement.bind(this));
+    // n-get-measurement - Get measurements from multiple stores during dates
+    app.get(this.namespace + 'n-get-measurement', this.handleNGetMeasurement.bind(this));
 }
 
 /**
@@ -324,38 +326,6 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
 }
 
 /**
- *  Get measurements from specified store
- *
- * @param req  {model:express~Request}   Request
- * @param res  {model:express~Response}  Response  
- */
-DataHandler.prototype.handleGetMeasurement = function (req, res) {
-    var sensorName = req.query.name;
-    var startDate = req.query.startdate;
-    var endDate = req.query.enddate;
-
-    var measurementStoreStr = "M" + nameFriendly(String(sensorName));
-
-    this.addDate(startDate, endDate);
-
-    var measuredRSet = this.base.search({
-        "$from": measurementStoreStr,
-        "Date": [{ "$gt": String(startDate) }, { "$lt": String(endDate) }]
-    });
-
-    if (measuredRSet == null) str = "[]";
-    else {
-        str = "[\n";
-        for (var i = 0; i < measuredRSet.length; i++) {
-            str += '  { "Val":' + measuredRSet[i].Val + ', "Timestamp": "' + measuredRSet[i].Time.toISOString().replace(/Z/, '') + '"}';
-            if (i != measuredRSet.length - 1) str += ',\n';
-        }
-        str += "\n]";
-    }
-    res.status(200).send(str);
-}
-
-/**
  * Add dummy sensor measurement (to inser date into a common key vocabulary)
  *
  * @param startDateStr  {String}  Starting date
@@ -372,6 +342,75 @@ DataHandler.prototype.addDate = function (startDateStr, endDateStr) {
     logger.debug('[Add date]' + endDateRequest);
     this.addMeasurement(JSON.parse(startDateRequest), false);
     this.addMeasurement(JSON.parse(endDateRequest), false);
+}
+
+/**
+ *  Get measurements for specified sensor in this timeframe
+ *
+ * @param sensorName   {string} Name of the sensor
+ * @param startDate    {string}
+ * @param endDate      {string}
+ * @return             {object} Object with measurements from specified sensor
+ */
+DataHandler.prototype.getMeasurement = function (sensorName, startDate, endDate) {
+    var measurementStoreStr = "M" + nameFriendly(String(sensorName));
+    
+    // Create dummy records for dates
+    this.addDate(startDate, endDate);
+    
+    // Query the store
+    var measuredRSet = this.base.search({
+        "$from": measurementStoreStr,
+        "Date": [{ "$gt": String(startDate) }, { "$lt": String(endDate) }]
+    });
+
+    var dataObj = [];
+    
+    for (var i = 0; i < measuredRSet.length; i++) {
+        dataObj.push({ 'Val': measuredRSet[i].Val, 'Timestamp': measuredRSet[i].Time.toISOString().replace(/Z/, '') });
+    }
+
+    return dataObj;
+}
+
+/**
+ *  Get measurements from specified store
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.handleGetMeasurement = function (req, res) {
+    var sensorName = req.query.name;
+    var startDate = req.query.startdate;
+    var endDate = req.query.enddate;
+
+    var data = this.getMeasurement(sensorName, startDate, endDate);
+    res.status(200).json(data);
+}
+
+/**
+ *  Get measurements from multiple stores
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.handleNGetMeasurement = function (req, res) {
+    var sensorListStr = req.query.name;
+    var sensorList = sensorListStr.split(",");
+    var dataObj = [];
+    logger.debug('[NGetMeasurement] ' + sensorList);
+
+    // Dates
+    var startDate = req.query.startdate;
+    var endDate = req.query.enddate;
+
+    for (var i = 0; i < sensorList.length; i++) {
+        var sensorName = sensorList[i];
+        var data = this.getMeasurement(sensorName, startDate, endDate)
+        dataObj.push({ "name": sensorName, "data": data });
+    }
+
+    res.status(200).json(dataObj);
 }
 
 /**
