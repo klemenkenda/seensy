@@ -30,15 +30,20 @@ DataHandler.prototype.setupRoutes = function (app) {
  * Parse data from request and send it to add measurements
  *
  * @param req  {model:express~Request}  Request
- * @param res  {model:express~Response}  Response  
+ * @param res  {model:express~Response}  Response
  */
 DataHandler.prototype.handleAddMeasurement = function (req, res) {
     logger.debug('[AddMeasurement] Start request handling');
     logger.debug('[AddMeasurement] ' + req.query.data)
+    
+    if (req.query.data == null) {
+        res.status(200).send("No Data");
+        return;
+    }
+
     var data = JSON.parse(req.query.data);
     
     this.addMeasurement(data);
-
     res.status(200).json({'done' : 'well'}).end();
 }
 
