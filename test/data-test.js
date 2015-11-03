@@ -158,7 +158,22 @@ describe('Data - REST API tests', function () {
                 .set('Accept', 'application/json')
                 .expect(200, done);
         });
+        
+        // n-get-measurement for 1 sensor
+        it('#GET ' + url + "/data/n-get-measurement?sensorNames=[1 sensor]", function (done) {
+            request(url)
+                .get("/data/n-get-measurement?sensorNames=WWO-Turin-Italy-WWO-humidity&startDate=2015-11-01&endDate=2015-11-03")
+                .set('Accept', 'application/json')
+                .expect(200, done);
+        });
 
+        // n-get-measurement for multiple sensors
+        it('#GET ' + url + "/data/n-get-measurement?sensorNames=[1 sensor]", function (done) {
+            request(url)
+                .get("/data/n-get-measurement?sensorNames=WWO-Turin-Italy-WWO-humidity,WWO-Turin-Italy-WWO-cloudcover,WWO-Turin-Italy-WWO-temp_C&startDate=2015-11-01&endDate=2015-11-03")
+                .set('Accept', 'application/json')
+                .expect(200, done);
+        });
         
         /* PART OF QM TESTS */
 
