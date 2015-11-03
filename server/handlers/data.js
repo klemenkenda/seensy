@@ -329,7 +329,6 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
         if (i != recSet.length - 1) str += ',\n';
     }
     str += "\n]";
-    console.log(str);
     res.status(200).send(str);
 }
 
