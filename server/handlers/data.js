@@ -16,6 +16,13 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'add-measurement', this.handleAddMeasurement.bind(this));
 }
 
+/**
+ * Get data from JSON, save node, type and measurements to the stores.
+ * If measurement store does not exist create it, together with all aggregates.
+ *
+ * @param req  {model:express~Request}  Request
+ * @param res  {model:express~Response}  Response  
+ */
 DataHandler.prototype.handleAddMeasurement = function (req, res) {
     logger.debug('[AddMeasurement] Start request handling');
     logger.debug('[AddMeasurement] ' + req.query.data)
@@ -137,6 +144,13 @@ function nameFriendly(myName) {
     return myName.replace(/\W/g, '');
 };
 
+
+/**
+ * Create structure of the aggregate store based on the name and configuration.
+ *
+ * @param aggregateStoreStr  {String}  Name of the aggregate store
+ * @return                   {Object}  Structure of the aggregate store   
+ */
 function getAggregateStoreStructure(aggregateStoreStr) {
     
     var data = {
@@ -170,6 +184,12 @@ function getAggregateStoreStructure(aggregateStoreStr) {
     return data;
 };
 
+/**
+ * Return last data point from specified aggregate store
+ *
+ * @param measurementStore {module:qm~Store}  Name of the aggregate store
+ * @return                 {Object}           Data from aggregate store 
+ */
 function getCurrentAggregates(measurementStore) {
     var data = {};
     
