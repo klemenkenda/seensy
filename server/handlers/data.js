@@ -1,6 +1,7 @@
 // general includes
 var qm = require('qminer');
 var logger = require('../../modules/logger/logger.js');
+require('./config.js')
 
 function DataHandler(app, base) {
     logger.debug('Data handler - INIT');
@@ -57,7 +58,7 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
             
             // If the store does not exist
             if (measurementStore == null) {
-                // Create Measumerment Store names 'M-sensorname'
+                // Create Measumerment Store named 'M-sensorname'
                 measurementStore = this.base.createStore([{
                         "name": measurementStoreStr,
                         "fields": [
@@ -70,6 +71,47 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
                             { "field": "Date", "type": "value", "sort": "string", "vocabulary": "date_vocabulary" }
                         ]
                     }]);
+
+                // Create aggregate store names 'A-sensorname'
+                var aggregateStoreDefinition = getAggregateStoreStructure(aggregateStoreStr);
+                this.base.createStore([aggregateStoreDefinition]);
+
+                // Add a tick
+                measurementStore.addStreamAggr({
+                    name: "tick", type: "timeSeriesTick",
+                    timestamp: "Time", value: "Val"
+                })
+
+                // Adding tick based aggregates
+                tickTimes.forEach(function (time) {
+                    tickAggregates.forEach(function (aggregate) {
+                        aggregateObj = {
+                            name: aggregate.name + time.name, type: aggregate.type, inAggr: "tick",
+                            emaType: "previous", interval: time.interval * 60 * 60 * 1000 - 1, initWindow: 0 * 60 * 1000
+                        };
+                        measurementStore.addStreamAggr(aggregateObj);
+                    })
+                });
+
+                // Adding winbuff based aggregates
+                bufTimes.forEach(function (time) {
+                    var bufname = 'winbuff' + time.name;
+                    // adding timeserieswinbuff aggregate
+                    measurementStore.addStreamAggr({
+                        name: bufname, type: "timeSeriesWinBuf",
+                        timestamp: "Time", value: "Val", winsize: time.interval * 60 * 60 * 1000 - 1
+                    });
+                    
+                    bufAggregates.forEach(function (aggregate) {
+                        aggregateObj = {
+                            name: aggregate.name + time.name, type: aggregate.type, inAggr: bufname
+                        };
+                        measurementStore.addStreamAggr(aggregateObj);
+                    })
+                });
+
+                logger.debug('[Add Measurement] Created new measurement store')
+                logger.debug('[Add Measurement] Aggregates: ' + measurementStore.getStreamAggrNames())
             }
 
             // Parse and store measurement
@@ -77,9 +119,14 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
             measurement.Val = Number(measurements[j].value);
             measurement.Time = measurements[j].timestamp;
             measurement.Date = measurements[j].timestamp.substr(0, 10);
-            
-            logger.debug('[AddMeasurement] ' + '{ "Val": ' + measurement.Val + ', "Time": "' + measurement.Time + '", "Date": "' + measurement.Date + '"}');
+                        
             measurementStore.push(measurement);
+
+            // Store current aggregates
+            var aggregateStore = this.base.store(aggregateStoreStr);
+            var aggregateid = aggregateStore.push(getCurrentAggregates(measurementStore));
+            
+            logger.debug('[AddMeasurement] Pushed' + '{ "Val": ' + measurement.Val + ', "Time": "' + measurement.Time + '", "Date": "' + measurement.Date + '"}');
         }
     }
 
@@ -88,6 +135,69 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
 
 function nameFriendly(myName) {
     return myName.replace(/\W/g, '');
-}
+};
+
+function getAggregateStoreStructure(aggregateStoreStr) {
+    
+    var data = {
+        "name": aggregateStoreStr,
+        "fields": [
+            { "name": "Time", "type": "datetime" },
+            { "name": "Date", "type": "string" }
+        ],
+        "joins": [],
+        "keys": [
+            { "field": "Date", "type": "value", "sort": "string", "vocabulary": "date_vocabulary" }
+        ]
+    };
+    
+    // adding tick-base aggregates
+    tickTimes.forEach(function (time) {
+        tickAggregates.forEach(function (aggregate) {
+            aggrname = aggregate.name + time.name;
+            data["fields"].push({ "name": aggrname, "type": "float" });
+        })
+    });
+    
+    // adding tick-base aggregates
+    bufTimes.forEach(function (time) {
+        bufAggregates.forEach(function (aggregate) {
+            aggrname = aggregate.name + time.name;
+            data["fields"].push({ "name": aggrname, "type": "float" });
+        })
+    });
+    
+    return data;
+};
+
+function getCurrentAggregates(measurementStore) {
+    var data = {};
+    
+    data["Time"] = measurementStore.getStreamAggr("tick").val.Time;
+    data["Date"] = data["Time"].substring(0, 10);
+    
+    // adding last measurement
+    data["last-measurement"] = measurementStore.getStreamAggr("tick").val.Val;
+    
+    // adding tick-base aggregates
+    tickTimes.forEach(function (time) {
+        tickAggregates.forEach(function (aggregate) {
+            aggrname = aggregate.name + time.name;
+            aggrtype = aggregate.name;
+            data[aggrname] = measurementStore.getStreamAggr(aggrname).val.Val;
+        })
+    });
+    
+    // adding tick-base aggregates
+    bufTimes.forEach(function (time) {
+        bufAggregates.forEach(function (aggregate) {
+            aggrname = aggregate.name + time.name;
+            aggrtype = aggregate.name;
+            data[aggrname] = measurementStore.getStreamAggr(aggrname).val.Val;
+        })
+    });
+    
+    return data;
+};
 
 module.exports = DataHandler;
