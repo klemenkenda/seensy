@@ -23,7 +23,6 @@ bufTimes = [
 ]
 
 bufAggregates = [
-    { name: "count", type: "winBufCount" },
     { name: "sum", type: "winBufSum" },
     { name: "min", type: "winBufMin" },
     { name: "max", type: "winBufMax" },
