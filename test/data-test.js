@@ -100,7 +100,47 @@ describe('Data - REST API tests', function () {
             request(url)
                 .get('/data/get-current-aggregates?sid=WWO-Turin-Italy-WWO-humidity')
                 .set('Accept', 'application/json')
-                .expect(200, done);
+                .expect(200, {
+                "Time": "2015-11-02T01:10:00.000",
+                "Date": "2015-11-02",
+                "last-measurement": 53,
+                "ema1h": 53,
+                "ema6h": 53,
+                "ema1d": 53,
+                "ema1w": 53,
+                "ema1m": 53,
+                "ema1y": 53,
+                "sum1h": 53,
+                "min1h": 53,
+                "max1h": 53,
+                "var1h": 0,
+                "ma1h": 53,
+                "sum6h": 53,
+                "min6h": 53,
+                "max6h": 53,
+                "var6h": 0,
+                "ma6h": 53,
+                "sum1d": 53,
+                "min1d": 53,
+                "max1d": 53,
+                "var1d": 0,
+                "ma1d": 53,
+                "sum1w": 53,
+                "min1w": 53,
+                "max1w": 53,
+                "var1w": 0,
+                "ma1w": 53,
+                "sum1m": 53,
+                "min1m": 53,
+                "max1m": 53,
+                "var1m": 0,
+                "ma1m": 53,
+                "sum1y": 53,
+                "min1y": 53,
+                "max1y": 53,
+                "var1y": 0,
+                "ma1y": 53
+            }, done);
         });      
        
         // Get nodes
@@ -116,47 +156,7 @@ describe('Data - REST API tests', function () {
             request(url)
                 .get("/data/get-measurement?sensorName=WWO-Turin-Italy-WWO-humidity&startDate=2015-11-01&endDate=2015-11-03")
                 .set('Accept', 'application/json')
-                .expect(200, {
-                    "Time": "2015-11-02T01:10:00.000",
-                    "Date": "2015-11-02",
-                    "last-measurement": 53,
-                    "ema1h": 53,
-                    "ema6h": 53,
-                    "ema1d": 53,
-                    "ema1w": 53,
-                    "ema1m": 53,
-                    "ema1y": 53,
-                    "sum1h": 53,
-                    "min1h": 53,
-                    "max1h": 53,
-                    "var1h": 0,
-                    "ma1h": 53,
-                    "sum6h": 53,
-                    "min6h": 53,
-                    "max6h": 53,
-                    "var6h": 0,
-                    "ma6h": 53,
-                    "sum1d": 53,
-                    "min1d": 53,
-                    "max1d": 53,
-                    "var1d": 0,
-                    "ma1d": 53,
-                    "sum1w": 53,
-                    "min1w": 53,
-                    "max1w": 53,
-                    "var1w": 0,
-                    "ma1w": 53,
-                    "sum1m": 53,
-                    "min1m": 53,
-                    "max1m": 53,
-                    "var1m": 0,
-                    "ma1m": 53,
-                    "sum1y": 53,
-                    "min1y": 53,
-                    "max1y": 53,
-                    "var1y": 0,
-                    "ma1y": 53
-                }, done);
+                .expect(200, done);
         });
 
         
