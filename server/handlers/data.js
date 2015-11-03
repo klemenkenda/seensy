@@ -36,7 +36,7 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
     logger.debug('[AddMeasurement] Start request handling');
     logger.debug('[AddMeasurement] ' + req.query.data)
     
-    if (req.query.data == null) {
+    if (req.query.data == null || req.query.data == '') {
         res.status(200).send("No Data");
         return;
     }
@@ -84,8 +84,10 @@ DataHandler.prototype.addMeasurement = function (data, control){
             sensor.NodeId = nodeid;
             sensor.TypeId = typeid;
             
+            // TODO: Figure out what is happening here!!!!!!!!!!!!!
             var sensorid = this.base.store("Sensor").push(sensor);
-            
+            var sensorid = this.base.store("Sensor").push(sensor);
+
             // Create names for additional stores
             var measurementStoreStr = "M" + nameFriendly(sensor.Name);
             var aggregateStoreStr = "A" + nameFriendly(sensor.Name);
@@ -309,7 +311,7 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
                 endDate = "0000-00-00";
                 val = -999.999;
             }
-            
+
             // Format sensor information
             if (j > 0) str += ',\n';
             str += '      {\n';
