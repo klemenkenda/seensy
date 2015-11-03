@@ -253,11 +253,11 @@ DataHandler.prototype.getCurrentAggregates = function(measurementStore) {
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.hangleGetNodes = function (req, res) {
-    var str;
     var recSet = this.base.store('Node').allRecords;
     
-    str = '[\n';
+    var str = '[\n';
     for (var i = 0; i < recSet.length; i++) {
+        // Format node information
         str += '  {\n';
         str += '    "Name": "' + recSet[i].Name + '",\n';
         str += '    "Position": [' + recSet[i].Position + '],\n';
@@ -268,9 +268,11 @@ DataHandler.prototype.hangleGetNodes = function (req, res) {
         
         for (var j = 0; j < sensorSet.length; j++) {
             
+            // Get measurement store
             var measurementStoreStr = "M" + nameFriendly(String(sensorSet[j].Name));
             measurementStore = this.base.store(measurementStoreStr);
             
+            // If store exists give data
             var startDate, endDate, val;
             if ((measurementStore != null) && (measurementStore.empty == false)) {
                 startDate = measurementStore.first.Date;
@@ -281,7 +283,8 @@ DataHandler.prototype.hangleGetNodes = function (req, res) {
                 endDate = "0000-00-00";
                 val = -999.999;
             }
-
+            
+            // Format sensor information
             if (j > 0) str += ',\n';
             str += '      {\n';
             str += '        "Name":"' + sensorSet[j].Name + '",\n';
