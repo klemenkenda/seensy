@@ -14,6 +14,10 @@ DataHandler.prototype.setupRoutes = function (app) {
     // custom handler setup
     // add-measurement - get data from JSON, save store and add aggregators
     app.get(this.namespace + 'add-measurement', this.handleAddMeasurement.bind(this));
+    // get-aggregate-store-structure - get the definition of aggregate store
+    app.get(this.namespace + 'get-aggregate-store-structure', this.handleGetAggregateStoreStructure.bind(this));
+    // get-current-aggregates - get last aggregates from aggregate store
+    app.get(this.namespace + 'get-current-aggregates', this.hangleGetCurrentAggregates.bind(this));
 }
 
 /**
@@ -80,7 +84,7 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
                     }]);
 
                 // Create aggregate store names 'A-sensorname'
-                var aggregateStoreDefinition = getAggregateStoreStructure(aggregateStoreStr);
+                var aggregateStoreDefinition = this.getAggregateStoreStructure(aggregateStoreStr);
                 this.base.createStore([aggregateStoreDefinition]);
 
                 // Add a tick
@@ -131,19 +135,26 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
 
             // Store current aggregates
             var aggregateStore = this.base.store(aggregateStoreStr);
-            var aggregateid = aggregateStore.push(getCurrentAggregates(measurementStore));
+            var aggregateid = aggregateStore.push(this.getCurrentAggregates(measurementStore));
             
             logger.debug('[AddMeasurement] Pushed' + '{ "Val": ' + measurement.Val + ', "Time": "' + measurement.Time + '", "Date": "' + measurement.Date + '"}');
         }
     }
 
-    res.type('json').status(200).json({'done' : 'well'}).end();
+    res.status(200).json({'done' : 'well'}).end();
 }
 
-function nameFriendly(myName) {
-    return myName.replace(/\W/g, '');
-};
-
+/**
+ * Get structure of specified aggregate store
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.handleGetAggregateStoreStructure = function (req, res) {
+    var aggregateStoreStr = "A" + nameFriendly(req.query.sid);
+    var data = this.getAggregateStoreStructure(aggregateStoreStr);
+    res.status(200).json(data);
+}
 
 /**
  * Create structure of the aggregate store based on the name and configuration.
@@ -151,7 +162,7 @@ function nameFriendly(myName) {
  * @param aggregateStoreStr  {String}  Name of the aggregate store
  * @return                   {Object}  Structure of the aggregate store   
  */
-function getAggregateStoreStructure(aggregateStoreStr) {
+DataHandler.prototype.getAggregateStoreStructure = function (aggregateStoreStr) {
     
     var data = {
         "name": aggregateStoreStr,
@@ -182,7 +193,20 @@ function getAggregateStoreStructure(aggregateStoreStr) {
     });
     
     return data;
-};
+}
+
+/**
+ * Get last aggregates from specified aggregate store
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.hangleGetCurrentAggregates = function (req, res){
+    var measurementStoreStr = "M" + nameFriendly(req.query.sid);
+    var measurementStore = this.base.store(measurementStoreStr);
+    var data = this.getCurrentAggregates(measurementStore);
+    res.status(200).json(data);
+}
 
 /**
  * Return last data point from specified aggregate store
@@ -190,7 +214,7 @@ function getAggregateStoreStructure(aggregateStoreStr) {
  * @param measurementStore {module:qm~Store}  Name of the aggregate store
  * @return                 {Object}           Data from aggregate store 
  */
-function getCurrentAggregates(measurementStore) {
+DataHandler.prototype.getCurrentAggregates = function(measurementStore) {
     var data = {};
     
     data["Time"] = measurementStore.getStreamAggr("tick").val.Time;
@@ -218,6 +242,16 @@ function getCurrentAggregates(measurementStore) {
     });
     
     return data;
+};
+
+/**
+ * Modify string to alpha numeric
+ *
+ * @param myName  {String}  input
+ * @return        {String}  alpha-numeric representation of input   
+ */
+function nameFriendly(myName) {
+    return myName.replace(/\W/g, '');
 };
 
 module.exports = DataHandler;
