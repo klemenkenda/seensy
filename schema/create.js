@@ -18,6 +18,7 @@ function cleanCreateMode() {
 function openMode() {
     var base = new qm.Base({
         mode: 'open',
+        dbPath: path.join(__dirname, './db'),
     })
     return base;
 }
