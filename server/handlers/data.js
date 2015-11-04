@@ -291,17 +291,13 @@ DataHandler.prototype.getCurrentAggregates = function(measurementStore) {
 DataHandler.prototype.handleGetNodes = function (req, res) {
     var recSet = this.base.store('Node').allRecords;
     
-    var str = '[\n';
-    for (var i = 0; i < recSet.length; i++) {
-        // Format node information
-        str += '  {\n';
-        str += '    "Name": "' + recSet[i].Name + '",\n';
-        str += '    "Position": [' + recSet[i].Position + '],\n';
-        str += '    "Sensors": [\n';
-        
+    var dataObj = [];
+    for (var i = 0; i < recSet.length; i++) {        
         // Get all the sensors for this node
         sensorSet = recSet[i].hasSensor.store.allRecords;
         
+        var sensorsObj = [];
+
         for (var j = 0; j < sensorSet.length; j++) {
             
             // Get measurement store
@@ -319,25 +315,25 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
                 endDate = "0000-00-00";
                 val = -999.999;
             }
-
-            // Format sensor information
-            if (j > 0) str += ',\n';
-            str += '      {\n';
-            str += '        "Name":"' + sensorSet[j].Name + '",\n';
-            str += '        "Phenomenon":"' + sensorSet[j].Type.Phenomena + '",\n';
-            str += '        "UoM":"' + sensorSet[j].Type.UoM + '",\n';
-            str += '        "StartDate":"' + startDate + '",\n';
-            str += '        "EndDate":"' + endDate + '",\n';
-            str += '        "Val":"' + val + '"\n';
-            str += '      }';
+            
+            // Add sensor information
+            sensorsObj.push({
+                'Name': sensorSet[j].Name,
+                'Phenomenon': sensorSet[j].Type.Phenomena,
+                'UoM': sensorSet[j].Type.UoM,
+                'StartDate': startDate,
+                'EndDate': endDate,
+                'Val': val
+            });
         }
-
-        str += '\n    ]\n'
-        str += '  }';
-        if (i != recSet.length - 1) str += ',\n';
+        // Add node information
+        dataObj.push({
+            'Name': recSet[i].Name,
+            'Position': recSet[i].Position,
+            'Sensors': sensorsObj
+        });
     }
-    str += "\n]";
-    res.status(200).send(str);
+    res.status(200).json(dataObj);
 }
 
 /**
