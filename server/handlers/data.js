@@ -24,9 +24,9 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'get-measurement', this.handleGetMeasurement.bind(this));
     // n-get-measurement - Get measurements from multiple stores during dates
     app.get(this.namespace + 'n-get-measurement', this.handleNGetMeasurement.bind(this));
-    // get-aggregate - Get aggregate from specified store during dates
+    // get-aggregate - Get aggregate (specified type and window) from specified store during dates
     app.get(this.namespace + 'get-aggregate', this.handleGetAggregate.bind(this));
-    // n-get-aggregate - Get aggregate from multiple stores during dates
+    // n-get-aggregate - Get aggregate (specified type and window) from multiple stores during dates
     app.get(this.namespace + 'n-get-aggregate', this.handleNGetAggregate.bind(this));
     // get-aggregates - Get aggregates from specified store during dates
     app.get(this.namespace + 'get-aggregates', this.handleGetAggregates.bind(this));

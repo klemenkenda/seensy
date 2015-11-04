@@ -191,6 +191,39 @@ describe('Data - REST API tests', function () {
                 .expect(200, done);
         });
         
+        // get-aggregate (MA, 1D)
+        it('#GET ' + url + "/data/get-aggregate?...", function (done) {
+            request(url)
+                .get("/data/get-aggregate?sensorName=WWO-Turin-Italy-WWO-humidity&startDate=2015-11-01&endDate=2015-11-03&type=ma&window=1d")
+                .set('Accept', 'application/json')
+                .expect(200, done);
+        });
+        
+        // n-get-aggregate (MA, 1D)
+        it('#GET ' + url + "/data/n-get-aggregate?...", function (done) {
+            request(url)
+                .get("/data/n-get-aggregate?sensorNames=WWO-Turin-Italy-WWO-humidity,WWO-Turin-Italy-WWO-cloudcover,WWO-Turin-Italy-WWO-temp_C&startDate=2015-11-01&endDate=2015-11-03&type=ma&window=1d")
+                .set('Accept', 'application/json')
+                .expect(200, done);
+        });
+        
+        // get-aggregates
+        it('#GET ' + url + "/data/get-aggregates?...", function (done) {
+            request(url)
+                .get("/data/get-aggregate?sensorName=WWO-Turin-Italy-WWO-humidity&startDate=2015-11-01&endDate=2015-11-03")
+                .set('Accept', 'application/json')
+                .expect(200, done);
+        });
+        
+        // n-get-aggregate (MA, 1D)
+        it('#GET ' + url + "/data/n-get-aggregates?...", function (done) {
+            request(url)
+                .get("/data/n-get-aggregate?sensorNames=WWO-Turin-Italy-WWO-humidity,WWO-Turin-Italy-WWO-cloudcover,WWO-Turin-Italy-WWO-temp_C&startDate=2015-11-01&endDate=2015-11-03")
+                .set('Accept', 'application/json')
+                .expect(200, done);
+        });
+        // TODO        
+        // add content tests for all functions
 
         /* PART OF QM TESTS */
 
@@ -202,5 +235,10 @@ describe('Data - REST API tests', function () {
                 .expect(200, done)
         });
     });
+
+    // TODO
+    // close instance, reopen base, check if measurements are intact
+    // add more data and check aggregate values
+    // add different sensors, different nodes, check aggregates
 });
  
