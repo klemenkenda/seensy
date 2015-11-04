@@ -26,6 +26,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'n-get-measurement', this.handleNGetMeasurement.bind(this));
     // get-aggregate - Get aggregate from specified store during dates
     app.get(this.namespace + 'get-aggregate', this.handleGetAggregate.bind(this));
+    // n-get-aggregate - Get aggregate from multiple stores during dates
+    app.get(this.namespace + 'n-get-aggregate', this.handleNGetAggregate.bind(this));
 }
 
 /**
@@ -470,6 +472,32 @@ DataHandler.prototype.handleGetAggregate = function (req, res) {
     var data = this.getAggregate(sensorName, startDate, endDate, type, window);
     res.status(200).json(data);
 }
+
+/**
+ *  Get aggregate from multiple sensors
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.handleNGetAggregate = function (req, res) {
+    var sensorNames = req.query.sensorNames;
+    var startDate = req.query.startDate;
+    var endDate = req.query.endDate;
+    var type = req.query.type;
+    var window = req.query.window;
+    
+    var sensorNamesList = sensorNames.split(',');
+    
+    var dataObj = [];
+
+    for (var i = 0; i < sensorNamesList.length; i++) {
+        var data = this.getAggregate(sensorNamesList[i], startDate, endDate, type, window);
+        dataObj.push({ 'name': sensorNamesList[i], 'data': data });
+    }
+    
+    res.status(200).json(dataObj);
+}
+
 
 /**
  * Modify string to alpha numeric
