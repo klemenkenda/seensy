@@ -24,6 +24,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'get-measurement', this.handleGetMeasurement.bind(this));
     // n-get-measurement - Get measurements from multiple stores during dates
     app.get(this.namespace + 'n-get-measurement', this.handleNGetMeasurement.bind(this));
+    // get-aggregate - Get aggregate from specified store during dates
+    app.get(this.namespace + 'get-aggregate', this.handleGetAggregate.bind(this));
 }
 
 /**
@@ -418,6 +420,55 @@ DataHandler.prototype.handleNGetMeasurement = function (req, res) {
     }
 
     res.status(200).json(dataObj);
+}
+
+/**
+ *  Get specified aggregate from store in this timeframe
+ *
+ * @param sensorName   {string} Name of the sensor
+ * @param startDate    {string}
+ * @param endDate      {string}
+ * @param type         {string}
+ * @param window       {string}
+ * @return             {object} Object with aggregates from specified sensor
+ */
+DataHandler.prototype.getAggregate = function (sensorName, startDate, endDate, type, window) {
+    // Store name
+    var aggregateStoreStr = "A" + nameFriendly(String(sensorName));
+    
+    // Add dummy date
+    this.addDate(startDate, endDate);
+    
+    // Get aggregates
+    var aggregateRecordSet = this.base.search({
+        "$from": aggregateStoreStr,
+        "Date": [{ "$gt": String(startDate) }, { "$lt": String(endDate) }]
+    });
+    
+    var dataObj = [];
+
+    for (var i = 0; i < aggregateRecordSet.length; i++) {
+        dataObj.push({'Val': aggregateRecordSet[i][type+window], 'Timestamp': aggregateRecordSet[i].Time.toISOString().replace(/Z/, '') });
+    }
+
+    return dataObj;
+}
+
+/**
+ *  Get aggregate
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.handleGetAggregate = function (req, res) {
+    var sensorName = req.query.sensorName;
+    var startDate = req.query.startDate;
+    var endDate = req.query.endDate;
+    var type = req.query.type;
+    var window = req.query.window;
+
+    var data = this.getAggregate(sensorName, startDate, endDate, type, window);
+    res.status(200).json(data);
 }
 
 /**
