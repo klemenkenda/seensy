@@ -30,6 +30,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'n-get-aggregate', this.handleNGetAggregate.bind(this));
     // get-aggregates - Get aggregates from specified store during dates
     app.get(this.namespace + 'get-aggregates', this.handleGetAggregates.bind(this));
+    // get-aggregates - Get aggregates from multiple stores during dates
+    app.get(this.namespace + 'n-get-aggregates', this.handleNGetAggregates.bind(this));
 }
 
 /**
@@ -524,7 +526,6 @@ DataHandler.prototype.getAggregates = function (sensorName, startDate, endDate) 
     var dataObj = [];
     
     for (var i = 0; i < aggregateRecordSet.length; i++) {
-        //dataObj.push({ 'Val': aggregateRecordSet[i][type + window], 'Timestamp': aggregateRecordSet[i].Time.toISOString().replace(/Z/, '') });
         dataObj.push(aggregateRecordSet[i]);
     }
 
@@ -544,6 +545,29 @@ DataHandler.prototype.handleGetAggregates = function (req, res) {
     
     var data = this.getAggregates(sensorName, startDate, endDate);
     res.status(200).json(data);
+}
+
+/**
+ *  Get aggregates from multiple sensors
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.handleNGetAggregates = function (req, res) {
+    var sensorNames = req.query.sensorNames;
+    var startDate = req.query.startDate;
+    var endDate = req.query.endDate;
+    
+    var sensorNamesList = sensorNames.split(',')
+    
+    var dataObj = [];
+
+    for (var i = 0; i < sensorNamesList.length; i++) {
+        var data = this.getAggregates(sensorNamesList[i], startDate, endDate);
+        dataObj.push({ 'name': sensorNamesList[i], 'data': data });
+    }
+   
+    res.status(200).json(dataObj);
 }
 
 /**
