@@ -32,6 +32,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'get-aggregates', this.handleGetAggregates.bind(this));
     // get-aggregates - Get aggregates from multiple stores during dates
     app.get(this.namespace + 'n-get-aggregates', this.handleNGetAggregates.bind(this));
+    // get-cleaning-sample - Get measurements of a sensor for cleaning
+    app.get(this.namespace + 'get-cleaning-sample', this.handleGetCleaningSample.bind(this));
 }
 
 /**
@@ -564,6 +566,33 @@ DataHandler.prototype.handleNGetAggregates = function (req, res) {
     }
    
     res.status(200).json(dataObj);
+}
+
+/**
+ *  Get measurements from sensor for cleaning
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.handleGetCleaningSample = function (req, res) {
+    var sensorName = req.query.sensorName;
+    var measurementStoreStr = "M" + nameFriendly(String(sensorName));
+    
+    // Get measurement store
+    var measuredRSet = this.base.store(measurementStoreStr);
+
+    // Take a maximum of 500 samples
+    samplelength = measuredRSet.length;
+    if (samplelength > 500) samplelength = 500;
+    
+    // Create CSV response
+    str = "";
+    for (var i = 0; i < samplelength; i++) {
+        str += measuredRSet[i].Time.toISOString().replace(/Z/, '') + ";" + measuredRSet[i].Val;
+        str += '\n';
+    }
+
+    res.status(200).send(str);
 }
 
 /**
