@@ -14,6 +14,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     // custom handler setup
     // add-measurement - get data from JSON, save store and add aggregators
     app.get(this.namespace + 'add-measurement', this.handleAddMeasurement.bind(this));
+    // add-measurement - get data from JSON, save store and add aggregators
+    app.get(this.namespace + 'add-measurement-no-control', this.handleAddMeasurementNoControl.bind(this));
     // get-aggregate-store-structure - get the definition of aggregate store
     app.get(this.namespace + 'get-aggregate-store-structure', this.handleGetAggregateStoreStructure.bind(this));
     // get-current-aggregates - get last aggregates from aggregate store
@@ -55,6 +57,27 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
     
     this.addMeasurement(data);
     res.status(200).json({'done' : 'well'}).end();
+}
+
+/**
+ * Parse data from request and send it to add measurements without adding the aggregates
+ *
+ * @param req  {model:express~Request}  Request
+ * @param res  {model:express~Response}  Response
+ */
+DataHandler.prototype.handleAddMeasurementNoControl = function (req, res) {
+    logger.debug('[AddMeasurement] Start request handling');
+    logger.debug('[AddMeasurement] ' + req.query.data)
+    
+    if (req.query.data == null || req.query.data == '') {
+        res.status(200).send("No Data");
+        return;
+    }
+    
+    var data = JSON.parse(req.query.data);
+    
+    this.addMeasurement(data, false);
+    res.status(200).json({ 'done' : 'well' }).end();
 }
 
 /**
