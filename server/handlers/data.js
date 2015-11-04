@@ -14,6 +14,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     // custom handler setup
     // add-measurement - get data from JSON, save store and add aggregators
     app.get(this.namespace + 'add-measurement', this.handleAddMeasurement.bind(this));
+    // add-measurement - get data from JSON, save store and update values
+    app.get(this.namespace + 'add-measurement-update', this.handleAddMeasurementUpdate.bind(this));
     // add-measurement - get data from JSON, save store and add aggregators
     app.get(this.namespace + 'add-measurement-no-control', this.handleAddMeasurementNoControl.bind(this));
     // get-aggregate-store-structure - get the definition of aggregate store
@@ -81,14 +83,36 @@ DataHandler.prototype.handleAddMeasurementNoControl = function (req, res) {
 }
 
 /**
+ * Parse data from request and send it to add measurements updating values if new
+ *
+ * @param req  {model:express~Request}  Request
+ * @param res  {model:express~Response}  Response
+ */
+DataHandler.prototype.handleAddMeasurementUpdate = function (req, res) {
+    logger.debug('[AddMeasurement] Start request handling');
+    logger.debug('[AddMeasurement] ' + req.query.data)
+    
+    if (req.query.data == null || req.query.data == '') {
+        res.status(200).send("No Data");
+        return;
+    }
+    
+    var data = JSON.parse(req.query.data);
+    
+    this.addMeasurement(data, true, true);
+    res.status(200).json({ 'done' : 'well' }).end();
+}
+
+/**
  * Save node, type and measurements to the stores.
  * If measurement store does not exist create it, together with all aggregates.
  *
  * @param data  {model:express~Request}  data to be added to stores
  */
-DataHandler.prototype.addMeasurement = function (data, control){
+DataHandler.prototype.addMeasurement = function (data, control, update){
     // Check if we want to do control
     control = typeof control !== 'undefined' ? control : true;
+    update = typeof update !== 'undefined' ? control : false;
 
     // Walk thru the data
     for (i = 0; i < data.length; i++) {
@@ -143,7 +167,7 @@ DataHandler.prototype.addMeasurement = function (data, control){
                             { "field": "Date", "type": "value", "sort": "string", "vocabulary": "date_vocabulary" }
                         ]
                     }]);
-                if (control) {
+                if (control && !update) {
                     // Create aggregate store names 'A-sensorname'
                     var aggregateStoreDefinition = this.getAggregateStoreStructure(aggregateStoreStr);
                     this.base.createStore([aggregateStoreDefinition]);
@@ -198,13 +222,26 @@ DataHandler.prototype.addMeasurement = function (data, control){
                 measurementStore.push(measurement);
             
                 // Store current aggregates
-                if (control) {
+                if (control && !update) {
                     var aggregateStore = this.base.store(aggregateStoreStr);
                     var aggregateid = aggregateStore.push(this.getCurrentAggregates(measurementStore));
                 }
                 logger.debug('[AddMeasurement] Pushed' + '{ "Val": ' + measurement.Val + ', "Time": "' + measurement.Time + '", "Date": "' + measurement.Date + '"}');
             } else {
-                logger.debug('[AddMeasurement] Measurement old, not pushing');
+                if (update) {
+                    logger.debug('[AddMeasurement] Measurement old, but updating...');
+                    var k = 0;
+                    while ((k < 10000) && (measurementStore.length - k > 0)) {
+                        k++;
+                        if (measurementStore[measurementStore.length - k].Time.toISOString().replace(/Z/, '').substr(0, 19) == measurement.Time.substr(0, 19)) {
+                            measurementStore[measurementStore.length - k].Val = measurement.Val;
+                            logger.debug('[AddMeasurement] Pushed' + '{ "Val": ' + measurement.Val + ', "Time": "' + measurement.Time + '", "Date": "' + measurement.Date + '"}');
+                            break;
+                        }
+                    }
+                } else {
+                    logger.debug('[AddMeasurement] Measurement old, not pushing');
+                }
             }
         }
     }
