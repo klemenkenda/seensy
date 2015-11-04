@@ -192,16 +192,20 @@ DataHandler.prototype.addMeasurement = function (data, control){
             measurement.Val = Number(measurements[j].value);
             measurement.Time = measurements[j].timestamp;
             measurement.Date = measurements[j].timestamp.substr(0, 10);
-            
+
             // TODO: Check if measurement is new or not
-            measurementStore.push(measurement);
+            if(!control || measurementStore.empty || (measurement.Time.substr(0, 19) > measurementStore.last.Time.toISOString().replace(/Z/, '').substr(0, 19))){
+                measurementStore.push(measurement);
             
-            // Store current aggregates
-            if (control) {
-                var aggregateStore = this.base.store(aggregateStoreStr);
-                var aggregateid = aggregateStore.push(this.getCurrentAggregates(measurementStore));
+                // Store current aggregates
+                if (control) {
+                    var aggregateStore = this.base.store(aggregateStoreStr);
+                    var aggregateid = aggregateStore.push(this.getCurrentAggregates(measurementStore));
+                }
+                logger.debug('[AddMeasurement] Pushed' + '{ "Val": ' + measurement.Val + ', "Time": "' + measurement.Time + '", "Date": "' + measurement.Date + '"}');
+            } else {
+                logger.debug('[AddMeasurement] Measurement old, not pushing');
             }
-            logger.debug('[AddMeasurement] Pushed' + '{ "Val": ' + measurement.Val + ', "Time": "' + measurement.Time + '", "Date": "' + measurement.Date + '"}');
         }
     }
 }
