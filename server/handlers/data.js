@@ -28,6 +28,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'get-aggregate', this.handleGetAggregate.bind(this));
     // n-get-aggregate - Get aggregate from multiple stores during dates
     app.get(this.namespace + 'n-get-aggregate', this.handleNGetAggregate.bind(this));
+    // get-aggregates - Get aggregates from specified store during dates
+    app.get(this.namespace + 'get-aggregates', this.handleGetAggregates.bind(this));
 }
 
 /**
@@ -498,6 +500,51 @@ DataHandler.prototype.handleNGetAggregate = function (req, res) {
     res.status(200).json(dataObj);
 }
 
+/**
+ *  Get specified aggregate from store in this timeframe
+ *
+ * @param sensorName   {string} Name of the sensor
+ * @param startDate    {string}
+ * @param endDate      {string}
+ * @return             {object} Object with aggregates from specified sensor
+ */
+DataHandler.prototype.getAggregates = function (sensorName, startDate, endDate) {
+    // Store name
+    var aggregateStoreStr = "A" + nameFriendly(String(sensorName));
+    
+    // Add dummy date
+    this.addDate(startDate, endDate);
+    
+    // Get aggregates
+    var aggregateRecordSet = this.base.search({
+        "$from": aggregateStoreStr,
+        "Date": [{ "$gt": String(startDate) }, { "$lt": String(endDate) }]
+    });
+    
+    var dataObj = [];
+    
+    for (var i = 0; i < aggregateRecordSet.length; i++) {
+        //dataObj.push({ 'Val': aggregateRecordSet[i][type + window], 'Timestamp': aggregateRecordSet[i].Time.toISOString().replace(/Z/, '') });
+        dataObj.push(aggregateRecordSet[i]);
+    }
+
+    return dataObj;
+}
+
+/**
+ *  Get aggregates
+ *
+ * @param req  {model:express~Request}   Request
+ * @param res  {model:express~Response}  Response  
+ */
+DataHandler.prototype.handleGetAggregates = function (req, res) {
+    var sensorName = req.query.sensorName;
+    var startDate = req.query.startDate;
+    var endDate = req.query.endDate;
+    
+    var data = this.getAggregates(sensorName, startDate, endDate);
+    res.status(200).json(data);
+}
 
 /**
  * Modify string to alpha numeric
