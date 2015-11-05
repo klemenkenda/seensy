@@ -62,6 +62,7 @@ describe('Data - REST API tests', function () {
         
         // Add a measurement
         it('#GET ' + url + "/data/add-measurement?data=...", function (done) {
+            this.timeout(5000);
             var param = '[{ "node": { "id": "842858", "name": "WWO-Turin-Italy", "lat": 45.050, "lng": 7.667, "measurements": [{ "sensorid": "WWO-Turin-Italy-WWO-cloudcover", "value": 0, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "1", "name": "WWO-cloudcover", "phenomenon": "cloudcover", "UoM": "%25" } }, { "sensorid": "WWO-Turin-Italy-WWO-humidity", "value": 53, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "2", "name": "WWO-humidity", "phenomenon": "humidity", "UoM": "%25" } }, { "sensorid": "WWO-Turin-Italy-WWO-precipMM", "value": 0.0, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "3", "name": "WWO-precipMM", "phenomenon": "precipitation", "UoM": "mm" } }, { "sensorid": "WWO-Turin-Italy-WWO-pressure", "value": 1033, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "4", "name": "WWO-pressure", "phenomenon": "pressure", "UoM": "mbar" } }, { "sensorid": "WWO-Turin-Italy-WWO-temp_C", "value": 10, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "5", "name": "WWO-temp_C", "phenomenon": "temperature", "UoM": "deg+C" } }, { "sensorid": "WWO-Turin-Italy-WWO-temp_F", "value": 50, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "6", "name": "WWO-temp_F", "phenomenon": "temperature", "UoM": "deg+F" } }, { "sensorid": "WWO-Turin-Italy-WWO-visibility", "value": 10, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "7", "name": "WWO-visibility", "phenomenon": "visibility", "UoM": "km" } }, { "sensorid": "WWO-Turin-Italy-WWO-weatherCode", "value": 113, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "8", "name": "WWO-weatherCode", "phenomenon": "weatherCode", "UoM": "" } }, { "sensorid": "WWO-Turin-Italy-WWO-winddirDegree", "value": 15, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "9", "name": "WWO-winddirDegree", "phenomenon": "winddirection", "UoM": "deg" } }, { "sensorid": "WWO-Turin-Italy-WWO-windspeedKmph", "value": 1, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "10", "name": "WWO-windspeedKmph", "phenomenon": "windspeed", "UoM": "km%2Fh" } }, { "sensorid": "WWO-Turin-Italy-WWO-windspeedMiles", "value": 0, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "11", "name": "WWO-windspeedMiles", "phenomenon": "windspeed", "UoM": "mph" } }] } }]';
             
             request(url)
@@ -220,7 +221,8 @@ describe('Data - REST API tests', function () {
         });        
         
         it('saving stream aggregates, closing server and base', function (done) {
-            baseIO.saveStreamAggrs(base, path.join(__dirname, './db'));
+            this.timeout(5000);
+            baseIO.saveStreamAggrs(base, __dirname);
             base.close();
             server.close(done);
         });
@@ -237,7 +239,7 @@ describe('Data - REST API tests', function () {
                 mode: 'open', 
                 dbPath: path.join(__dirname, './db'),
             })
-            baseIO.loadStreamAggrs(base, path.join(__dirname, './db'));
+            baseIO.loadStreamAggrs(base, __dirname);
             
             // init server
             server.init();
