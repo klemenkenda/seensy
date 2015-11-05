@@ -7,6 +7,7 @@ var request = require('supertest');
 var env = process.env.NODE_ENV || 'test';
 var config = require('../config.json')[env];
 var logger = require('../modules/logger/logger.js');
+var baseIO = require('../schema/io.js');
 
 // Set verbosity of QMiner internals
 qm.verbosity(1);
@@ -14,8 +15,8 @@ qm.verbosity(1);
 // test services
 describe('Data - REST API tests', function () {
     var url = config.dataService.server.root;
-    var base = undefined;
-    
+    var base = undefined;    
+
     // create base and start server on localhost before each test
     before(function () { // this returns same error as *.js
         this.timeout(30000);
@@ -25,7 +26,7 @@ describe('Data - REST API tests', function () {
             mode: 'createClean', 
             schemaPath: path.join(__dirname, '../schema/store.def'), // its more robust but, doesen't work from the console (doesent know __dirname)
             dbPath: path.join(__dirname, './db'),
-        })
+        });        
         
         // init server
         server.init();
@@ -218,7 +219,8 @@ describe('Data - REST API tests', function () {
                 .expect(200, done)
         });        
         
-        it('closing server and base', function (done) {
+        it('saving stream aggregates, closing server and base', function (done) {
+            baseIO.saveStreamAggrs(base, path.join(__dirname, './db'));
             base.close();
             server.close(done);
         });
@@ -235,6 +237,7 @@ describe('Data - REST API tests', function () {
                 mode: 'open', 
                 dbPath: path.join(__dirname, './db'),
             })
+            baseIO.loadStreamAggrs(base, path.join(__dirname, './db'));
             
             // init server
             server.init();

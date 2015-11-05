@@ -2,6 +2,7 @@
 var qm = require('qminer');
 var server = require('./server.js');
 var createBase = require('./schema/create.js');
+var BaseIO = require('./schema/io.js');
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config.json')[env];
 
@@ -10,6 +11,7 @@ qm.verbosity(0);
 // read input script argument for mode type. Default is "cleanCreate"
 var scriptArgs = (process.argv[2] == null) ? "cleanCreate" : process.argv[2];
 var base = createBase.mode(scriptArgs);
+var baseIO = BaseIO(base);
 
 // TODO: do we need to pass base or can we use it globally?
 server.init();

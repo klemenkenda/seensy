@@ -1,7 +1,10 @@
 // general includes
 var qm = require('qminer');
 var logger = require('../../modules/logger/logger.js');
-require('./config.js')
+require('./config.js');
+
+var Utils = {};
+Utils.Sensor = require("../utils/sensor.js");
 
 function DataHandler(app, base) {
     logger.debug('Data handler - INIT');
@@ -146,9 +149,9 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
             var sensorid = this.base.store("Sensor").push(sensor);
 
             // Create names for additional stores
-            var measurementStoreStr = "M" + nameFriendly(sensor.Name);
-            var aggregateStoreStr = "A" + nameFriendly(sensor.Name);
-            var resampledStoreStr = "R" + nameFriendly(sensor.Name);
+            var measurementStoreStr = "M" + Utils.Sensor.nameFriendly(sensor.Name);
+            var aggregateStoreStr = "A" + Utils.Sensor.nameFriendly(sensor.Name);
+            var resampledStoreStr = "R" + Utils.Sensor.nameFriendly(sensor.Name);
             
             var measurementStore = this.base.store(measurementStoreStr);
             
@@ -247,7 +250,6 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
     }
 }
 
-
 /**
  * Get structure of specified aggregate store
  *
@@ -255,7 +257,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.handleGetAggregateStoreStructure = function (req, res) {
-    var aggregateStoreStr = "A" + nameFriendly(req.query.sid);
+    var aggregateStoreStr = "A" + Utils.Sensor.nameFriendly(req.query.sid);
     var data = this.getAggregateStoreStructure(aggregateStoreStr);
     res.status(200).json(data);
 }
@@ -306,7 +308,7 @@ DataHandler.prototype.getAggregateStoreStructure = function (aggregateStoreStr) 
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.handleGetCurrentAggregates = function (req, res) {
-    var measurementStoreStr = "M" + nameFriendly(req.query.sid);
+    var measurementStoreStr = "M" + Utils.Sensor.nameFriendly(req.query.sid);
     var measurementStore = this.base.store(measurementStoreStr);
     var data = this.getCurrentAggregates(measurementStore);
     res.status(200).json(data);
@@ -367,7 +369,7 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
         for (var j = 0; j < sensorSet.length; j++) {
             
             // Get measurement store
-            var measurementStoreStr = "M" + nameFriendly(String(sensorSet[j].Name));
+            var measurementStoreStr = "M" + Utils.Sensor.nameFriendly(String(sensorSet[j].Name));
             measurementStore = this.base.store(measurementStoreStr);
             
             // If store exists give data
@@ -430,7 +432,7 @@ DataHandler.prototype.addDate = function (startDateStr, endDateStr) {
  * @return             {object} Object with measurements from specified sensor
  */
 DataHandler.prototype.getMeasurement = function (sensorName, startDate, endDate) {
-    var measurementStoreStr = "M" + nameFriendly(String(sensorName));
+    var measurementStoreStr = "M" + Utils.Sensor.nameFriendly(String(sensorName));
     
     // Create dummy records for dates
     this.addDate(startDate, endDate);
@@ -502,7 +504,7 @@ DataHandler.prototype.handleNGetMeasurement = function (req, res) {
  */
 DataHandler.prototype.getAggregate = function (sensorName, startDate, endDate, type, window) {
     // Store name
-    var aggregateStoreStr = "A" + nameFriendly(String(sensorName));
+    var aggregateStoreStr = "A" + Utils.Sensor.nameFriendly(String(sensorName));
     
     // Add dummy date
     this.addDate(startDate, endDate);
@@ -574,7 +576,7 @@ DataHandler.prototype.handleNGetAggregate = function (req, res) {
  */
 DataHandler.prototype.getAggregates = function (sensorName, startDate, endDate) {
     // Store name
-    var aggregateStoreStr = "A" + nameFriendly(String(sensorName));
+    var aggregateStoreStr = "A" + Utils.Sensor.nameFriendly(String(sensorName));
     
     // Add dummy date
     this.addDate(startDate, endDate);
@@ -640,7 +642,7 @@ DataHandler.prototype.handleNGetAggregates = function (req, res) {
  */
 DataHandler.prototype.handleGetCleaningSample = function (req, res) {
     var sensorName = req.query.sensorName;
-    var measurementStoreStr = "M" + nameFriendly(String(sensorName));
+    var measurementStoreStr = "M" + Utils.Sensor.nameFriendly(String(sensorName));
     
     // Get measurement store
     var measuredRSet = this.base.store(measurementStoreStr);
@@ -658,17 +660,5 @@ DataHandler.prototype.handleGetCleaningSample = function (req, res) {
 
     res.status(200).send(str);
 }
-
-/**
- * Modify string to alpha numeric
- *
- * @param myName  {String}  input
- * @return        {String}  alpha-numeric representation of input   
- */
-function nameFriendly(myName) {
-    return myName.replace(/\W/g, '');
-}
-
-
 
 module.exports = DataHandler;
