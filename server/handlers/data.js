@@ -125,9 +125,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
         node.Position = new Array();
         node.Position[0] = data[i].node.lat;
         node.Position[1] = data[i].node.lng;
-        
-        var nodeid = this.base.store("Node").push(node);
-        
+                
         var measurements = data[i].node.measurements;
         for (j = 0; j < measurements.length; j++) {
             // Parse and store type information
@@ -136,18 +134,13 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
             type.Phenomena = measurements[j].type.phenomenon;
             type.UoM = measurements[j].type.UoM;
             
-            var typeid = this.base.store("Type").push(type);
-            
             // Parse and store node information
             var sensor = new Object();
-            sensor.Name = measurements[j].sensorid;
-            sensor.NodeId = nodeid;
-            sensor.TypeId = typeid;
-            
-            // TODO: Figure out what is happening here!!!!!!!!!!!!!
-            // IDEA: joining explicitly with ID's might not be the correct way 
-            //       to input such data - see https://rawgit.com/qminer/qminer/master/nodedoc/module-qm.html#~SchemaJoinDefinition
-            var sensorid = this.base.store("Sensor").push(sensor);
+            sensor.Name = measurements[j].sensorid;            
+            sensor.Node = node;
+            sensor.Type = type;
+
+            // write sensor records with corresponding joins
             var sensorid = this.base.store("Sensor").push(sensor);
 
             // Create names for additional stores

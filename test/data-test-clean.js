@@ -71,6 +71,13 @@ describe('Data - REST API tests', function () {
                 .expect(200, done)
         });
         
+        // number of records in node store
+        it('Node store should have 1 record', function (done) {
+            var nodeN = base.store("Node").length;
+            assert.equal(nodeN, 1);
+            done();
+        });
+
         // Add a measurement - no param - should return JSON error message with error description
         it('#GET ' + url + "/data/add-measurement", function (done) {
             request(url)
@@ -275,6 +282,13 @@ describe('Data - REST API tests', function () {
                 .set('Accept', 'application/json')
                 .expect(200, done)
             });
+            
+            // number of records in node store
+            it('Node store should have 2 records', function (done) {
+                var nodeN = base.store("Node").length;
+                assert.equal(nodeN, 2);
+                done();
+            });           
             
             // Add a measurement - no param - should return JSON error message with error description
             it('#GET ' + url + "/data/add-measurement", function (done) {
