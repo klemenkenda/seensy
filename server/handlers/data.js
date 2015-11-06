@@ -145,6 +145,8 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
             sensor.TypeId = typeid;
             
             // TODO: Figure out what is happening here!!!!!!!!!!!!!
+            // IDEA: joining explicitly with ID's might not be the correct way 
+            //       to input such data - see https://rawgit.com/qminer/qminer/master/nodedoc/module-qm.html#~SchemaJoinDefinition
             var sensorid = this.base.store("Sensor").push(sensor);
             var sensorid = this.base.store("Sensor").push(sensor);
 
