@@ -155,7 +155,105 @@ describe('Data - REST API tests', function () {
             request(url)
                 .get("/data/get-nodes")
                 .set('Accept', 'application/json')
-                .expect(200, done);
+                .expect(200, [
+                {
+                    "Name": "WWO-Turin-Italy",
+                    "Position": [
+                        45.05,
+                        7.667
+                    ],
+                    "Sensors": [
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-cloudcover",
+                            "Phenomenon": "cloudcover",
+                            "UoM": "%",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 0
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-humidity",
+                            "Phenomenon": "humidity",
+                            "UoM": "%",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 53
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-precipMM",
+                            "Phenomenon": "precipitation",
+                            "UoM": "mm",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 0
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-pressure",
+                            "Phenomenon": "pressure",
+                            "UoM": "mbar",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 1033
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-temp_C",
+                            "Phenomenon": "temperature",
+                            "UoM": "deg C",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 10
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-temp_F",
+                            "Phenomenon": "temperature",
+                            "UoM": "deg F",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 50
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-visibility",
+                            "Phenomenon": "visibility",
+                            "UoM": "km",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 10
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-weatherCode",
+                            "Phenomenon": "weatherCode",
+                            "UoM": "",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 113
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-winddirDegree",
+                            "Phenomenon": "winddirection",
+                            "UoM": "deg",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 15
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-windspeedKmph",
+                            "Phenomenon": "windspeed",
+                            "UoM": "km/h",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 1
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-windspeedMiles",
+                            "Phenomenon": "windspeed",
+                            "UoM": "mph",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 0
+                        }
+                    ]
+                }
+            ], done);
         });
         
         // Get measurement
@@ -166,6 +264,146 @@ describe('Data - REST API tests', function () {
                 .expect(200, done);
         });
         
+        // Get nodes
+        it('#GET ' + url + "/data/get-nodes after 2 nodes inserted", function (done) {
+            request(url)
+            .get("/data/get-nodes")
+            .set('Accept', 'application/json')
+            .expect(200, [
+                {
+                    "Name": "WWO-Turin-Italy",
+                    "Position": [
+                        45.05,
+                        7.667
+                    ],
+                    "Sensors": [
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-cloudcover",
+                            "Phenomenon": "cloudcover",
+                            "UoM": "%",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 0
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-humidity",
+                            "Phenomenon": "humidity",
+                            "UoM": "%",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 53
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-precipMM",
+                            "Phenomenon": "precipitation",
+                            "UoM": "mm",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 0
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-pressure",
+                            "Phenomenon": "pressure",
+                            "UoM": "mbar",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 1033
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-temp_C",
+                            "Phenomenon": "temperature",
+                            "UoM": "deg C",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 10
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-temp_F",
+                            "Phenomenon": "temperature",
+                            "UoM": "deg F",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 50
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-visibility",
+                            "Phenomenon": "visibility",
+                            "UoM": "km",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 10
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-weatherCode",
+                            "Phenomenon": "weatherCode",
+                            "UoM": "",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 113
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-winddirDegree",
+                            "Phenomenon": "winddirection",
+                            "UoM": "deg",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 15
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-windspeedKmph",
+                            "Phenomenon": "windspeed",
+                            "UoM": "km/h",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 1
+                        },
+                        {
+                            "Name": "WWO-Turin-Italy-WWO-windspeedMiles",
+                            "Phenomenon": "windspeed",
+                            "UoM": "mph",
+                            "StartDate": "2015-11-02",
+                            "EndDate": "2015-11-02",
+                            "Val": 0
+                        }
+                    ]
+                },
+                {
+                    "Name": "virtual-node",
+                    "Position": [
+                        0,
+                        0
+                    ],
+                    "Sensors": [
+                        {
+                            "Name": "virtual-node-request",
+                            "Phenomenon": "request",
+                            "UoM": "r",
+                            "StartDate": "2015-11-01",
+                            "EndDate": "2015-11-03",
+                            "Val": 1
+                        }
+                    ]
+                },
+            {
+                "Name": "virtual-node",
+                "Position": [
+                    0,
+                    0
+                ],
+                "Sensors": [
+                    {
+                        "Name": "virtual-node-request",
+                        "Phenomenon": "request",
+                        "UoM": "r",
+                        "StartDate": "2015-11-01",
+                        "EndDate": "2015-11-03",
+                        "Val": 1
+                    }
+                ]
+            }
+            ], done);
+        });
+
         // n-get-measurement for 1 sensor
         it('#GET ' + url + "/data/n-get-measurement?sensorNames=[1 sensor]", function (done) {
             request(url)
@@ -367,7 +605,122 @@ describe('Data - REST API tests', function () {
                 request(url)
                 .get("/data/get-nodes")
                 .set('Accept', 'application/json')
-                .expect(200, done);
+                .expect(200, [
+                    {
+                        "Name": "WWO-Turin-Italy",
+                        "Position": [
+                            45.05,
+                            7.667
+                        ],
+                        "Sensors": [
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-cloudcover",
+                                "Phenomenon": "cloudcover",
+                                "UoM": "%",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 0
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-humidity",
+                                "Phenomenon": "humidity",
+                                "UoM": "%",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 53
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-precipMM",
+                                "Phenomenon": "precipitation",
+                                "UoM": "mm",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 0
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-pressure",
+                                "Phenomenon": "pressure",
+                                "UoM": "mbar",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 1033
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-temp_C",
+                                "Phenomenon": "temperature",
+                                "UoM": "deg C",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 10
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-temp_F",
+                                "Phenomenon": "temperature",
+                                "UoM": "deg F",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 50
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-visibility",
+                                "Phenomenon": "visibility",
+                                "UoM": "km",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 10
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-weatherCode",
+                                "Phenomenon": "weatherCode",
+                                "UoM": "",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 113
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-winddirDegree",
+                                "Phenomenon": "winddirection",
+                                "UoM": "deg",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 15
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-windspeedKmph",
+                                "Phenomenon": "windspeed",
+                                "UoM": "km/h",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 1
+                            },
+                            {
+                                "Name": "WWO-Turin-Italy-WWO-windspeedMiles",
+                                "Phenomenon": "windspeed",
+                                "UoM": "mph",
+                                "StartDate": "2015-11-02",
+                                "EndDate": "2015-11-02",
+                                "Val": 0
+                            }
+                        ]
+                    },
+                    {
+                        "Name": "virtual-node",
+                        "Position": [
+                            0,
+                            0
+                        ],
+                        "Sensors": [
+                            {
+                                "Name": "virtual-node-request",
+                                "Phenomenon": "request",
+                                "UoM": "r",
+                                "StartDate": "2015-11-01",
+                                "EndDate": "2015-11-03",
+                                "Val": 1
+                            }
+                        ]
+                    }
+                ], done);
             });
             
             // Get measurement

@@ -140,7 +140,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
             sensor.Node = node;
             sensor.Type = type;
 
-            // write sensor records with corresponding joins
+            // write sensor records with corresponding joinsit 
             var sensorid = this.base.store("Sensor").push(sensor);
 
             // Create names for additional stores
@@ -355,8 +355,9 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
     var recSet = this.base.store('Node').allRecords;
     
     var dataObj = [];
-    for (var i = 0; i < recSet.length; i++) {        
+    for (var i = 0; i < recSet.length; i++) {
         // Get all the sensors for this node
+        // BUG: this gives all records from a store, we only need sensors, bound to the node
         sensorSet = recSet[i].hasSensor.store.allRecords;
         
         var sensorsObj = [];
