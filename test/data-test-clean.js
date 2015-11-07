@@ -383,24 +383,7 @@ describe('Data - REST API tests', function () {
                             "Val": 1
                         }
                     ]
-                },
-            {
-                "Name": "virtual-node",
-                "Position": [
-                    0,
-                    0
-                ],
-                "Sensors": [
-                    {
-                        "Name": "virtual-node-request",
-                        "Phenomenon": "request",
-                        "UoM": "r",
-                        "StartDate": "2015-11-01",
-                        "EndDate": "2015-11-03",
-                        "Val": 1
-                    }
-                ]
-            }
+                },            
             ], done);
         });
 
