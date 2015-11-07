@@ -356,9 +356,7 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
     
     var dataObj = [];
     for (var i = 0; i < recSet.length; i++) {
-        // Get all the sensors for this node
-        // BUG: this gives all records from a store, we only need sensors, bound to the node
-        // sensorSet = recSet[i].hasSensor.store.allRecords;
+        // Get all the sensors for this node        
         sensorSet = recSet[i].hasSensor;
         
         var sensorsObj = [];
