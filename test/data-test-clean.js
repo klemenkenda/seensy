@@ -434,6 +434,14 @@ describe('Data - REST API tests', function () {
                 .set('Accept', 'application/json')
                 .expect(200, done);
         });
+        
+        // push sync stores
+        it('#GET ' + url + "/data/push-sync-stores?[3 sensors]", function (done) {
+            request(url)
+                .get("/data/push-sync-stores?sid=WWO-Turin-Italy-WWO-humidity,WWO-Turin-Italy-WWO-cloudcover,WWO-Turin-Italy-WWO-temp_C&lastTs=0&remoteURL=http://localhost/push-to-null&prediction=0&maxitems=10")
+                .set('Accept', 'application/json')
+                .expect(200, done);
+        });
         // TODO        
         // add content tests for all functions
         
