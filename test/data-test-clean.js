@@ -706,7 +706,7 @@ describe('Data - REST API tests', function () {
                                 "Phenomenon": "request",
                                 "UoM": "r",
                                 "StartDate": "2015-11-01",
-                                "EndDate": "2015-11-03",
+                                "EndDate": "1970-01-01",
                                 "Val": 1
                             }
                         ]
