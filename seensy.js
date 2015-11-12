@@ -11,8 +11,8 @@ qm.verbosity(0);
 
 // read input script argument for mode type. Default is "cleanCreate"
 var scriptArgs = (process.argv[2] == null) ? "cleanCreate" : process.argv[2];
-var base = createBase.mode(scriptArgs);
-
+//var base = createBase.mode(scriptArgs);
+var base = baseIO.openBase(scriptArgs);
 // TODO: do we need to pass base or can we use it globally?
 server.init();
 

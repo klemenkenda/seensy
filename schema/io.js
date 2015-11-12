@@ -1,9 +1,10 @@
 var fs = require('qminer').fs;
 var path = require('path');
 var logger = require('../modules/logger/logger.js');
-var createBase = require('.create.js');
-var config = require('./config.json')[env];
-require('../server/handlers/config.js')
+var createBase = require('./create.js');
+var env = process.env.NODE_ENV || 'development';
+var config = require('../config.json')[env];
+require('../server/handlers/config.js');
 
 var Utils = {};
 Utils.Sensor = require("../server/utils/sensor.js");
@@ -129,9 +130,9 @@ function closeBase(base) {
  *
  * @param base  {module:qm~Base}    
  */
-function openBase() {
-    var base = createBase('open');
-    loadStreamAggrs(base);
+function openBase(open) {
+    var base = createBase.mode(open);
+    if (open == 'open') loadStreamAggrs(base);
     return base;
 }
 
@@ -152,8 +153,29 @@ function shutdown(base, server) {
     });
 }
 
+
+
+/**
+ * Backup the database
+ * 
+ * @param base  {module:qm~Base}
+ * @param app  {module:expressjs~App}
+ */
+function backup(base, server) {
+    logger.info('[Main] Initiating backup');
+    server.close(function () {
+        logger.info('[Main] Closed connection');
+        saveStreamAggrs(base);
+        logger.info('[Main] Saved stream aggregates')
+        closeBase(base);
+        base = openBase();
+        server.start(config.dataService.server.port);
+    });
+}
+
 module.exports = {
     closeBase: closeBase,
+    openBase: openBase,
     shutdown: shutdown,
     loadStreamAggrs: loadStreamAggrs,
     saveStreamAggrs: saveStreamAggrs,
