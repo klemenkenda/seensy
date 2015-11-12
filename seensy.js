@@ -5,6 +5,7 @@ var createBase = require('./schema/create.js');
 var baseIO = require('./schema/io.js');
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config.json')[env];
+var schedule = require('node-schedule');
 
 qm.verbosity(0);
 
@@ -24,6 +25,11 @@ dataModule.setupRoutes(server.app);
 // var ModelModule = require('./modelModule.js')
 // var modelModule = new ModelModule()
 // modelModule.setupRoutes(server.app)
+
+// schedule backup
+var j = schedule.scheduleJob({ hour: 00, minute: 00 }, function () {
+    
+});
 
 // start server
 server.start(config.dataService.server.port);
