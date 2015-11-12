@@ -1,12 +1,14 @@
 var fs = require('qminer').fs;
 var path = require('path');
 var logger = require('../modules/logger/logger.js');
+var createBase = require('.create.js');
+var config = require('./config.json')[env];
 require('../server/handlers/config.js')
 
 var Utils = {};
 Utils.Sensor = require("../server/utils/sensor.js");
 
-exports.saveStreamAggrs = function (base, dir) {
+function saveStreamAggrs(base, dir) {
     var dataObj = [];
 
     // Default value is __dirname
@@ -44,7 +46,7 @@ exports.saveStreamAggrs = function (base, dir) {
     
 }
 
-exports.loadStreamAggrs = function (base, dir) {
+function loadStreamAggrs(base, dir) {
     // Default value is __dirname
     dir = typeof dir !== 'undefined' ? dir : __dirname;
 
@@ -104,3 +106,55 @@ exports.loadStreamAggrs = function (base, dir) {
     }
 
 };
+
+/**
+ * Close Base
+ *
+ * @param base  {module:qm~Base}    
+ */
+function closeBase(base) {
+    logger.info('[Main] Closing base ...');
+    
+    if (base != null) {
+        logger.info('[Main] Closing ...');
+        base.garbageCollect();
+        base.close();
+    }
+    
+    logger.info('[Main] Done!');
+}
+
+/**
+ * Open base
+ *
+ * @param base  {module:qm~Base}    
+ */
+function openBase() {
+    var base = createBase('open');
+    loadStreamAggrs(base);
+    return base;
+}
+
+/**
+ * Shutdown main application
+ * 
+ * @param base  {module:qm~Base}
+ * @param app  {module:expressjs~App}
+ */
+function shutdown(base, server) {
+    logger.info('[Main] Initiating shutdown');
+    server.close(function () {  
+        logger.info('[Main] Closed remaining connection');
+        saveStreamAggrs(base);
+        logger.info('[Main] Saved stream aggregates')
+        closeBase(base);
+        process.exit(0)
+    });
+}
+
+module.exports = {
+    closeBase: closeBase,
+    shutdown: shutdown,
+    loadStreamAggrs: loadStreamAggrs,
+    saveStreamAggrs: saveStreamAggrs,
+}
