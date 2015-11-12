@@ -48,6 +48,11 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.get(this.namespace + 'add', this.handleAdd.bind(this));
 }
 
+DataHandler.prototype.setupRoutesTest = function (app) {
+    // null - dummy function
+    app.get(this.namespace + 'null', this.handleDummy.bind(this));
+}
+
 /**
  * Parse data from request and send it to add measurements
  *
@@ -754,6 +759,16 @@ DataHandler.prototype.handleAdd = function (req, res) {
         logger.debug('[Push-Sync Add] Time problem: ' + record.Time + ' - store time: ' + store.last.Time.toISOString().replace(/Z/, '').substr(0, 19));
     }
     res.status(200).json('Done');
+}
+
+/**
+ * Dummy function that does nothing - for testing purposes
+ *
+ * @param req  {model:express~Request}  Request
+ * @param res  {model:express~Response}  Response
+ */
+DataHandler.prototype.handleDummy = function (req, res) {
+    res.status(200).json({ 'done': 'well' }).end();
 }
 
 module.exports = DataHandler;
