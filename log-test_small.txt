@@ -1,1 +1,0 @@
-[{ "node": { "id": "842858", "name": "WWO-Turin-Italy", "lat": 45.050, "lng": 7.667, "measurements": [{ "sensorid": "WWO-Turin-Italy-WWO-cloudcover", "value": 0, "timestamp": "2015-11-02T01:10:00.000", "type": { "id": "1", "name": "WWO-cloudcover", "phenomenon": "cloudcover", "UoM": "%25" } }] } }]
