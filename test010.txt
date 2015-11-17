@@ -1,0 +1,305 @@
+
+
+  Data - REST API tests
+info: [Server] Running on port http://localhost:9613/
+    √ #GET http://localhost:9613/ (68ms)
+    Store I/O functions
+      √ #GET http://localhost:9613/data/add-measurement?data=... (1109ms)
+      √ #GET http://localhost:9613/data/add-measurement
+      √ #GET http://localhost:9613/data/add-measurement?data=
+      √ #GET http://localhost:9613/data/get-aggregate-store-structure?sid=test
+      √ #GET http://localhost:9613/data/get-current-aggregates?sid=WWO-Turin-Italy-WWO-humidity
+      √ #GET http://localhost:9613/data/get-nodes
+      √ #GET http://localhost:9613/data/get-measurement?... (62ms)
+      √ #GET http://localhost:9613/data/n-get-measurement?sensorNames=[1 sensor]
+      √ #GET http://localhost:9613/data/n-get-measurement?sensorNames=[multiple sensors]
+      √ #GET http://localhost:9613/data/get-aggregate?...
+      √ #GET http://localhost:9613/data/n-get-aggregate?...
+      √ #GET http://localhost:9613/data/get-aggregates?...
+      √ #GET http://localhost:9613/data/n-get-aggregates?... (47ms)
+      √ #GET http://localhost:9613/qm/stores
+Creating new base from schema
+Opening in create mode
+Parsing schema
+Creating Node
+Adding trigger to store Node
+Creating Type
+Adding trigger to store Type
+Creating Sensor
+Adding trigger to store Sensor
+Creating joins
+Updating inverse join maps
+Saving list of stores ... 
+Parsing schema
+Creating MWWOTurinItalyWWOcloudcover
+Adding trigger to store MWWOTurinItalyWWOcloudcover
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOcloudcover
+Adding trigger to store AWWOTurinItalyWWOcloudcover
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOhumidity
+Adding trigger to store MWWOTurinItalyWWOhumidity
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOhumidity
+Adding trigger to store AWWOTurinItalyWWOhumidity
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOprecipMM
+Adding trigger to store MWWOTurinItalyWWOprecipMM
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOprecipMM
+Adding trigger to store AWWOTurinItalyWWOprecipMM
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOpressure
+Adding trigger to store MWWOTurinItalyWWOpressure
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOpressure
+Adding trigger to store AWWOTurinItalyWWOpressure
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOtemp_C
+Adding trigger to store MWWOTurinItalyWWOtemp_C
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOtemp_C
+Adding trigger to store AWWOTurinItalyWWOtemp_C
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOtemp_F
+Adding trigger to store MWWOTurinItalyWWOtemp_F
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOtemp_F
+Adding trigger to store AWWOTurinItalyWWOtemp_F
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOvisibility
+Adding trigger to store MWWOTurinItalyWWOvisibility
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOvisibility
+Adding trigger to store AWWOTurinItalyWWOvisibility
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOweatherCode
+Adding trigger to store MWWOTurinItalyWWOweatherCode
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOweatherCode
+Adding trigger to store AWWOTurinItalyWWOweatherCode
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOwinddirDegree
+Adding trigger to store MWWOTurinItalyWWOwinddirDegree
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOwinddirDegree
+Adding trigger to store AWWOTurinItalyWWOwinddirDegree
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOwindspeedKmph
+Adding trigger to store MWWOTurinItalyWWOwindspeedKmph
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOwindspeedKmph
+Adding trigger to store AWWOTurinItalyWWOwindspeedKmph
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating MWWOTurinItalyWWOwindspeedMiles
+Adding trigger to store MWWOTurinItalyWWOwindspeedMiles
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating AWWOTurinItalyWWOwindspeedMiles
+Adding trigger to store AWWOTurinItalyWWOwindspeedMiles
+Creating joins
+Updating inverse join maps
+Parsing schema
+Creating Mvirtualnoderequest
+Adding trigger to store Mvirtualnoderequest
+Creating joins
+Updating inverse join maps
+Saving list of stores ... 
+Saving index vocabulary ... 
+Saving store 'Mvirtualnoderequest'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOwindspeedMiles'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOwindspeedMiles'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOwindspeedKmph'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOwindspeedKmph'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Savi      √ closing server and base (828ms)
+    Data - reload base - REST API tests
+info: [Server] Running on port http://localhost:9613/
+      √ #GET http://localhost:9613/
+      Store I/O functions
+        √ #GET http://localhost:9613/data/add-measurement?data=...
+        √ #GET http://localhost:9613/data/add-measurement
+        √ #GET http://localhost:9613/data/add-measurement?data=
+        √ #GET http://localhost:9613/data/get-aggregate-store-structure?sid=test
+        1) #GET http://localhost:9613/data/get-current-aggregates?sid=WWO-Turin-Italy-WWO-humidity
+        √ #GET http://localhost:9613/data/get-nodes
+        √ #GET http://localhost:9613/data/get-measurement?...
+        √ #GET http://localhost:9613/data/n-get-measurement?sensorNames=[1 sensor]
+        √ #GET http://localhost:9613/data/n-get-measurement?sensorNames=[multiple sensors]
+        √ #GET http://localhost:9613/data/get-aggregate?...
+        √ #GET http://localhost:9613/data/n-get-aggregate?...
+        √ #GET http://localhost:9613/data/get-aggregates?...
+        √ #GET http://localhost:9613/data/n-get-aggregates?...
+ng store 'AWWOTurinItalyWWOwinddirDegree'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOwinddirDegree'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOweatherCode'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOweatherCode'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOvisibility'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOvisibility'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOtemp_F'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOtemp_F'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOtemp_C'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOtemp_C'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOpressure'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOpressure'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOprecipMM'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOprecipMM'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOhumidity'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOhumidity'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'AWWOTurinItalyWWOcloudcover'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'MWWOTurinItalyWWOcloudcover'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'Sensor'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'Type'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving store 'Node'...
+Flush: 0/1Flush: 0/1 (0.0%)Flush: 1/1Saving and closing inverted index
+Flush: 0/50Flush: 0/50 (0.0%)Flush: 50/50Saving and closing inverted index - small
+Flush: 0/0Flush: 0/0Saving and closing location index
+Saving and closing btree index
+Index closed
+Loading base created from schema definition
+Opening in update mode
+Loading stores
+  Node
+Adding trigger to store Node
+  Type
+Adding trigger to store Type
+  Sensor
+Adding trigger to store Sensor
+  MWWOTurinItalyWWOcloudcover
+Adding trigger to store MWWOTurinItalyWWOcloudcover
+  AWWOTurinItalyWWOcloudcover
+Adding trigger to store AWWOTurinItalyWWOcloudcover
+  MWWOTurinItalyWWOhumidity
+Adding trigger to store MWWOTurinItalyWWOhumidity
+  AWWOTurinItalyWWOhumidity
+Adding trigger to store AWWOTurinItalyWWOhumidity
+  MWWOTurinItalyWWOprecipMM
+Adding trigger to store MWWOTurinItalyWWOprecipMM
+  AWWOTurinItalyWWOprecipMM
+Adding trigger to store AWWOTurinItalyWWOprecipMM
+  MWWOTurinItalyWWOpressure
+Adding trigger to store MWWOTurinItalyWWOpressure
+  AWWOTurinItalyWWOpressure
+Adding trigger to store AWWOTurinItalyWWOpressure
+  MWWOTurinItalyWWOtemp_C
+Adding trigger to store MWWOTurinItalyWWOtemp_C
+  AWWOTurinItalyWWOtemp_C
+Adding trigger to store AWWOTurinItalyWWOtemp_C
+  MWWOTurinItalyWWOtemp_F
+Adding trigger to store MWWOTurinItalyWWOtemp_F
+  AWWOTurinItalyWWOtemp_F
+Adding trigger to store AWWOTurinItalyWWOtemp_F
+  MWWOTurinItalyWWOvisibility
+Adding trigger to store MWWOTurinItalyWWOvisibility
+  AWWOTurinItalyWWOvisibility
+Adding trigger to store AWWOTurinItalyWWOvisibility
+  MWWOTurinItalyWWOweatherCode
+Adding trigger to store MWWOTurinItalyWWOweatherCode
+  AWWOTurinItalyWWOweatherCode
+Adding trigger to store AWWOTurinItalyWWOweatherCode
+  MWWOTurinItalyWWOwinddirDegree
+Adding trigger to store MWWOTurinItalyWWOwinddirDegree
+  AWWOTurinItalyWWOwinddirDegree
+Adding trigger to store AWWOTurinItalyWWOwinddirDegree
+  MWWOTurinItalyWWOwindspeedKmph
+Adding trigger to store MWWOTurinItalyWWOwindspeedKmph
+  AWWOTurinItalyWWOwindspeedKmph
+Adding trigger to store AWWOTurinItalyWWOwindspeedKmph
+  MWWOTurinItalyWWOwindspeedMiles
+Adding trigger to store MWWOTurinItalyWWOwindspeedMiles
+  AWWOTurinItalyWWOwindspeedMiles
+Adding trigger to store AWWOTurinItalyWWOwindspeedMiles
+  Mvirtualnoderequest
+Adding trigger to store Mvirtualnoderequest
+Stores loaded
+Saving list of stores ... 
+Saving index vocabulary ... 
+Saving store 'Mvirtualnoderequest'...
+F
+
+  29 passing (4s)
+  1 failing
+
+  1) Data - REST API tests Data - reload base - REST API tests Store I/O functions #GET http://localhost:9613/data/get-current-aggregates?sid=WWO-Turin-Italy-WWO-humidity:
+     Error: expected 200 "OK", got 500 "Internal Server Error"
+      at Test._assertStatus (C:\Users\rmocnik\Documents\seensy\node_modules\supertest\lib\test.js:232:12)
+      at Test._assertFunction (C:\Users\rmocnik\Documents\seensy\node_modules\supertest\lib\test.js:247:11)
+      at Test.assert (C:\Users\rmocnik\Documents\seensy\node_modules\supertest\lib\test.js:148:18)
+      at assert (C:\Users\rmocnik\Documents\seensy\node_modules\supertest\lib\test.js:127:12)
+      at C:\Users\rmocnik\Documents\seensy\node_modules\supertest\lib\test.js:124:5
+      at Test.Request.callback (C:\Users\rmocnik\Documents\seensy\node_modules\supertest\node_modules\superagent\lib\node\index.js:797:3)
+      at IncomingMessage.<anonymous> (C:\Users\rmocnik\Documents\seensy\node_modules\supertest\node_modules\superagent\lib\node\index.js:990:12)
+      at _stream_readable.js:908:16
+
+
+
+lush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOwindspeedMiles'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOwindspeedMiles'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOwindspeedKmph'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOwindspeedKmph'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOwinddirDegree'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOwinddirDegree'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOweatherCode'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOweatherCode'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOvisibility'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOvisibility'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOtemp_F'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOtemp_F'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOtemp_C'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOtemp_C'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOpressure'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOpressure'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOprecipMM'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOprecipMM'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOhumidity'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOhumidity'...
+Flush: 0/0Flush: 0/0Saving store 'AWWOTurinItalyWWOcloudcover'...
+Flush: 0/0Flush: 0/0Saving store 'MWWOTurinItalyWWOcloudcover'...
+Flush: 0/0Flush: 0/0Saving store 'Sensor'...
+Flush: 0/0Flush: 0/0Saving store 'Type'...
+Flush: 0/0Flush: 0/0Saving store 'Node'...
+Flush: 0/0Flush: 0/0Saving and closing inverted index
+Flush: 0/8Flush: 0/8 (0.0%)Flush: 8/8Saving and closing inverted index - small
+Flush: 0/0Flush: 0/0Saving and closing location index
+Saving and closing btree index
+Index closed

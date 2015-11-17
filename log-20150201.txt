@@ -1,0 +1,190 @@
+[ {
+  "id" : "iren_2000200200",
+  "name" : "test",
+  "subjectid" : "test",
+  "lat" : 22.3131,
+  "lng" : 35.747,
+  "measurements" : [ {
+    "sensorid" : "1",
+    "value" : "3.4",
+    "timestamp" : "2015-01-14T21:39:00.992",
+    "type" : {
+      "id" : "tr",
+      "name" : "traffic_circulation",
+      "phenomenon" : "traffic_circulation",
+      "uoM" : "vehicles/h"
+    }
+  } ]
+} ]
+[ {
+  "id" : "iren_2000200200",
+  "name" : "test",
+  "subjectid" : "test",
+  "lat" : 22.3131,
+  "lng" : 35.747,
+  "measurements" : [ {
+    "sensorid" : "1",
+    "value" : "3.4",
+    "timestamp" : "2015-01-14T21:39:00.992",
+    "type" : {
+      "id" : "tr",
+      "name" : "traffic_circulation",
+      "phenomenon" : "traffic_circulation",
+      "uoM" : "vehicles/h"
+    }
+  } ]
+} ]
+[ {
+  "id" : "iren_2000200200",
+  "name" : "test",
+  "subjectid" : "test",
+  "lat" : 22.3131,
+  "lng" : 35.747,
+  "measurements" : [ {
+    "sensorid" : "1",
+    "value" : "3.4",
+    "timestamp" : "2015-01-14T21:39:00.992",
+    "type" : {
+      "id" : "tr",
+      "name" : "traffic_circulation",
+      "phenomenon" : "traffic_circulation",
+      "uoM" : "vehicles/h"
+    }
+  } ]
+} ]
+[ {
+  "id" : "iren_2000200200",
+  "name" : "test",
+  "subjectid" : "test",
+  "lat" : 22.3131,
+  "lng" : 35.747,
+  "measurements" : [ {
+    "sensorid" : "1",
+    "value" : "3.4",
+    "timestamp" : "2015-01-14T21:39:00.992",
+    "type" : {
+      "id" : "tr",
+      "name" : "traffic_circulation",
+      "phenomenon" : "traffic_circulation",
+      "uoM" : "vehicles/h"
+    }
+  } ]
+} ]
+[ {
+  "id" : "iren_2000200200",
+  "name" : "test",
+  "subjectid" : "test",
+  "lat" : 22.3131,
+  "lng" : 35.747,
+  "measurements" : [ {
+    "sensorid" : "1",
+    "value" : "3.4",
+    "timestamp" : "2015-01-14T21:39:00.992",
+    "type" : {
+      "id" : "tr",
+      "name" : "traffic_circulation",
+      "phenomenon" : "traffic_circulation",
+      "uoM" : "vehicles/h"
+    }
+  } ]
+} ]
+[ {
+  "id" : "iren_2000200200",
+  "name" : "test",
+  "subjectid" : "test",
+  "lat" : 22.3131,
+  "lng" : 35.747,
+  "measurements" : [ {
+    "sensorid" : "1",
+    "value" : "3.4",
+    "timestamp" : "2015-01-14T21:39:00.992",
+    "type" : {
+      "id" : "tr",
+      "name" : "traffic_circulation",
+      "phenomenon" : "traffic_circulation",
+      "uoM" : "vehicles/h"
+    }
+  } ]
+} ]
+[{"node":{"id":"iren_2000200200","name":"test","lat":22.3131,"lng":35.747,"subjectid":"test","measurements":[{"sensorid":"1","value":"3.4","timestamp":"2015-01-14T21:39:00.992","type":{"id":"tr","name":"traffic_circulation","phenomenon":"traffic_circulation","UoM":"vehicles/h"}}]}}]
+[{"node":{"id":"iren_2000200200","name":"test","lat":22.3131,"lng":35.747,"subjectid":"test","measurements":[{"sensorid":"1","value":"3.4","timestamp":"2015-02-01T21:48:00.992","type":{"id":"tr","name":"traffic_circulation","phenomenon":"traffic_circulation","UoM":"vehicles/h"}}]}}]
+[ {
+  "node" : {
+    "id" : "iren_2000200200",
+    "name" : "test",
+    "subjectid" : "test",
+    "lat" : 22.3131,
+    "lng" : 35.747,
+    "measurements" : [ {
+      "sensorid" : "1",
+      "value" : "3.4",
+      "timestamp" : "2015-01-14T21:39:00.992",
+      "type" : {
+        "id" : "tr",
+        "name" : "traffic_circulation",
+        "phenomenon" : "traffic_circulation",
+        "uoM" : "vehicles/h"
+      }
+    } ]
+  }
+} ]
+[ {
+  "node" : {
+    "id" : "iren_2000200200",
+    "name" : "test",
+    "subjectid" : "test",
+    "lat" : 22.3131,
+    "lng" : 35.747,
+    "measurements" : [ {
+      "sensorid" : "1",
+      "value" : "3.4",
+      "timestamp" : "2015-02-01T21:39:00.992",
+      "type" : {
+        "id" : "tr",
+        "name" : "traffic_circulation",
+        "phenomenon" : "traffic_circulation",
+        "uoM" : "vehicles/h"
+      }
+    } ]
+  }
+} ]
+[ {
+  "node" : {
+    "id" : "iren_2000200200",
+    "name" : "test",
+    "subjectid" : "test",
+    "lat" : 22.3131,
+    "lng" : 35.747,
+    "measurements" : [ {
+      "sensorid" : "1",
+      "value" : "3.4",
+      "timestamp" : "2015-02-01T21:39:00.992",
+      "type" : {
+        "id" : "tr",
+        "name" : "traffic_circulation",
+        "phenomenon" : "traffic_circulation",
+        "uoM" : "vehicles/h"
+      }
+    } ]
+  }
+} ]
+[ {
+  "node" : {
+    "id" : "iren_2000200200",
+    "name" : "test",
+    "subjectid" : "test",
+    "lat" : 22.3131,
+    "lng" : 35.747,
+    "measurements" : [ {
+      "sensorid" : "1",
+      "value" : "3.4",
+      "timestamp" : "2015-02-01T22:00:00.992",
+      "type" : {
+        "id" : "tr",
+        "name" : "traffic_circulation",
+        "phenomenon" : "traffic_circulation",
+        "uoM" : "vehicles/h"
+      }
+    } ]
+  }
+} ]

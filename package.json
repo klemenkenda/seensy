@@ -24,6 +24,7 @@
     "node-schedule": "^0.5.1",
     "qminer": "^3.0.0",
     "request": "^2.62.0",
+    "rimraf": "^2.4.3",
     "winston": "^1.0.1"
   },
   "devDependencies": {
