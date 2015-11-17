@@ -121,6 +121,9 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
     // Check if we want to do control
     control = typeof control !== 'undefined' ? control : true;
     update = typeof update !== 'undefined' ? control : false;
+    
+    // Send to CEP
+    sendMeasurementToCEP(data);
 
     // Walk thru the data
     for (i = 0; i < data.length; i++) {
@@ -754,6 +757,11 @@ DataHandler.prototype.handleAdd = function (req, res) {
         logger.debug('[Push-Sync Add] Time problem: ' + record.Time + ' - store time: ' + store.last.Time.toISOString().replace(/Z/, '').substr(0, 19));
     }
     res.status(200).json('Done');
+}
+
+// Weird stuff
+function sendMeasurementToCEP(data) {
+    http.post("http://atena.ijs.si:9080/Esper-Services/api/QMinerJSONInputService", "application/json", JSON.stringify(data));
 }
 
 module.exports = DataHandler;
