@@ -4,6 +4,7 @@ var logger = require('../modules/logger/logger.js');
 var createBase = require('./create.js');
 var env = process.env.NODE_ENV || 'development';
 var config = require('../config.json')[env];
+var ncp = require('ncp').ncp;
 require('../server/handlers/config.js');
 
 var Utils = {};
@@ -132,7 +133,10 @@ function closeBase(base) {
  */
 function openBase(open) {
     var base = createBase.mode(open);
-    if (open == 'open') loadStreamAggrs(base);
+    if (open == 'open') {
+        loadStreamAggrs(base);
+        logger.info('[Main] Loaded stream aggregates');
+    }
     return base;
 }
 
@@ -162,20 +166,28 @@ function shutdown(base, server) {
  * @param app  {module:expressjs~App}
  */
 function backup(base, server) {
+    // TODO: Send information about backup to the webserver
     logger.info('[Main] Initiating backup');
     server.close(function () {
         logger.info('[Main] Closed connection');
         saveStreamAggrs(base);
         logger.info('[Main] Saved stream aggregates')
         closeBase(base);
-        base = openBase();
-        server.start(config.dataService.server.port);
+        // TODO: Zip files and back them up
+        ncp(__dirname + './db/', __dirname + './backup/' + new Date().toISOString() + '/', function (err) { 
+            logger.info('[Main] Backup finished')
+            base = openBase('open');
+            logger.info(base.getStoreList());
+            server.listen(config.dataService.server.port);
+            logger.info('[Server] Running on port http://localhost:%s/', config.dataService.server.port)
+        });
     });
 }
 
 module.exports = {
     closeBase: closeBase,
     openBase: openBase,
+    backup: backup,
     shutdown: shutdown,
     loadStreamAggrs: loadStreamAggrs,
     saveStreamAggrs: saveStreamAggrs,
