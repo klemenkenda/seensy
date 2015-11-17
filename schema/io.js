@@ -1,10 +1,12 @@
 var fs = require('qminer').fs;
+var fsnode = require('fs')
 var path = require('path');
 var logger = require('../modules/logger/logger.js');
 var createBase = require('./create.js');
 var env = process.env.NODE_ENV || 'development';
 var config = require('../config.json')[env];
 var ncp = require('ncp').ncp;
+var rimraf = require('rimraf')
 var mkdirp = require('mkdirp');
 require('../server/handlers/config.js');
 
@@ -127,6 +129,21 @@ function closeBase(base) {
     logger.info('[Main] Done!');
 }
 
+function getLatestBackup(dir){
+    function getDirectories(srcpath) {
+        return fsnode.readdirSync(srcpath).filter(function (file) {
+            return fsnode.statSync(path.join(srcpath, file)).isDirectory();
+        });
+    }
+    backups = getDirectories(dir);
+    var backup_id = 0;
+    for (var i = 0; i < backups.length; i++) {
+        var ii = parseInt(backups[i]);
+        if (ii > backup_id) backup_id = ii;
+    }
+    return backup_id;
+}
+
 /**
  * Open base
  *
@@ -136,13 +153,39 @@ function openBase(open) {
     if (open == 'backup') {
         open = 'open';
         // TODO: move files to db folder
+        
+        // Find latest backup
+        var num = getLatestBackup(path.join(__dirname, './backup/'))
+        // Delete current db create new folder and copy backup into it
+        db_folder = path.join(__dirname, './db/');
+        backup_folder = path.join(__dirname, './backup/' + num + '/');
+        logger.debug('[Main] ' + backup_folder);
+        logger.debug('[Main] ' + db_folder);
+        rimraf(db_folder, function (err) {
+            logger.debug('[Main] ' + err);
+            mkdirp(db_folder, function (err) {
+                logger.debug('[Main] ' + err);
+                ncp(backup_folder, db_folder, function (err) {
+                    logger.debug('[Main] ' + err);
+                    var base = createBase.mode(open);
+                    if (open == 'open') {
+                        loadStreamAggrs(base);
+                        logger.info('[Main] Loaded stream aggregates');
+                    }
+                    return base;
+                });
+            });
+        });
+
+    } else {
+        var base = createBase.mode(open);
+        if (open == 'open') {
+            loadStreamAggrs(base);
+            logger.info('[Main] Loaded stream aggregates');
+        }
+        return base;
     }
-    var base = createBase.mode(open);
-    if (open == 'open') {
-        loadStreamAggrs(base);
-        logger.info('[Main] Loaded stream aggregates');
-    }
-    return base;
+    
 }
 
 /**
@@ -179,7 +222,8 @@ function backup(base, server) {
         logger.info('[Main] Saved stream aggregates');
         closeBase(base);
         // Backup db files to another location
-        dest = path.join(__dirname, './backup/' + new Date().toISOString().replace(/Z/, '').replace(/:/g, '').split('.')[0] + '/');
+        num = getLatestBackup(path.join(__dirname, './backup/'))
+        dest = path.join(__dirname, './backup/' + (num + 1) + '/');
         source = path.join(__dirname, './db/');
         logger.debug(source);
         logger.debug(dest);
