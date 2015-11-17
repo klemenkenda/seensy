@@ -5,6 +5,7 @@ var createBase = require('./create.js');
 var env = process.env.NODE_ENV || 'development';
 var config = require('../config.json')[env];
 var ncp = require('ncp').ncp;
+var mkdirp = require('mkdirp');
 require('../server/handlers/config.js');
 
 var Utils = {};
@@ -132,6 +133,10 @@ function closeBase(base) {
  * @param base  {module:qm~Base}    
  */
 function openBase(open) {
+    if (open == 'backup') {
+        open = 'open';
+        // TODO: move files to db folder
+    }
     var base = createBase.mode(open);
     if (open == 'open') {
         loadStreamAggrs(base);
@@ -171,15 +176,21 @@ function backup(base, server) {
     server.close(function () {
         logger.info('[Main] Closed connection');
         saveStreamAggrs(base);
-        logger.info('[Main] Saved stream aggregates')
+        logger.info('[Main] Saved stream aggregates');
         closeBase(base);
-        // TODO: Zip files and back them up
-        ncp(__dirname + './db/', __dirname + './backup/' + new Date().toISOString() + '/', function (err) { 
-            logger.info('[Main] Backup finished')
-            base = openBase('open');
-            logger.info(base.getStoreList());
-            server.listen(config.dataService.server.port);
-            logger.info('[Server] Running on port http://localhost:%s/', config.dataService.server.port)
+        // Backup db files to another location
+        dest = path.join(__dirname, './backup/' + new Date().toISOString().replace(/Z/, '').replace(/:/g, '').split('.')[0] + '/');
+        source = path.join(__dirname, './db/');
+        logger.debug(source);
+        logger.debug(dest);
+        mkdirp(dest, function (err) {
+            logger.debug('[Main] ' + err);
+            ncp(source, dest, function (err) {
+                logger.debug('[Main] ' + err);
+                logger.info('[Main] Backup finished');
+                logger.info('[Main] Shutting down');
+                process.exit(0);
+            });
         });
     });
 }
