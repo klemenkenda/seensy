@@ -1,6 +1,7 @@
 // general includes
 var qm = require('qminer');
 var logger = require('../../modules/logger/logger.js');
+var http = require('http');
 require('./config.js');
 
 var Utils = {};
@@ -761,7 +762,20 @@ DataHandler.prototype.handleAdd = function (req, res) {
 
 // Weird stuff
 function sendMeasurementToCEP(data) {
-    http.post("http://atena.ijs.si:9080/Esper-Services/api/QMinerJSONInputService", "application/json", JSON.stringify(data));
+    var post_data = JSON.stringify(data);
+    var post_options = {
+        host: 'atena.ijs.si',
+        port: '9080',
+        path: '/Esper-Services/api/QMinerJSONInputService',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(post_data)
+        }
+    };
+    var post_request = http.request(post_options);
+    post_request.write(post_data);
+    post_request.end();
 }
 
 module.exports = DataHandler;
