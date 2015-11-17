@@ -149,11 +149,8 @@ function getLatestBackup(dir){
  *
  * @param base  {module:qm~Base}    
  */
-function openBase(open) {
+function openBase(open, startup) {
     if (open == 'backup') {
-        open = 'open';
-        // TODO: move files to db folder
-        
         // Find latest backup
         var num = getLatestBackup(path.join(__dirname, './backup/'))
         // Delete current db create new folder and copy backup into it
@@ -167,11 +164,11 @@ function openBase(open) {
                 logger.debug('[Main] ' + err);
                 ncp(backup_folder, db_folder, function (err) {
                     logger.debug('[Main] ' + err);
-                    var base = createBase.mode(open);
-                    if (open == 'open') {
-                        loadStreamAggrs(base);
-                        logger.info('[Main] Loaded stream aggregates');
-                    }
+                    var base = createBase.mode('open');
+                    loadStreamAggrs(base);
+                    logger.info('[Main] Loaded stream aggregates');
+                    
+                    startup(base);
                     return base;
                 });
             });
@@ -183,6 +180,7 @@ function openBase(open) {
             loadStreamAggrs(base);
             logger.info('[Main] Loaded stream aggregates');
         }
+        startup(base);
         return base;
     }
     
