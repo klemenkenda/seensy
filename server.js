@@ -1,13 +1,16 @@
 var bodyParser = require('body-parser');
+
 var logger = require('./modules/logger/logger.js');
 var app = undefined;
 
 function init() {
     var express = require('express');
     this.app = express();
-    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.json({ limit: 10000000 }));
+
     this.app.use(bodyParser.urlencoded({
-        extended: true
+        extended: true,
+        limit: 100000000
     }));
 }
 

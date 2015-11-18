@@ -11,6 +11,9 @@
         },
         "logger": {
             "console": { "level": "debug" }
+        }, 
+        "dataLogger":  {
+            "dir":  "./utilities/logpush/logs/"
         }
     },
     
@@ -23,6 +26,9 @@
         }, 
         "logger": {
             "console": { "level": "info" }
+        }, 
+        "dataLogger":  {
+            "dir":  "./utilities/logpush/logs/"
         }
     },
 
@@ -38,6 +44,9 @@
         },
         "logger": {
             "console": { "level": "error" }
+        }, 
+        "dataLogger":  {
+            "dir":  "./utilities/logpush/logs/"
         }
     }
 }

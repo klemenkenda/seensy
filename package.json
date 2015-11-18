@@ -1,6 +1,6 @@
 {
   "name": "Seensy",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Seensy",
   "main": "seensy.js",
   "author": {
@@ -13,6 +13,7 @@
   },
   "scripts": {
     "start": "set NODE_ENV=development&& node seensy.js",
+    "logpush": "set NODE_ENV=development&& node ./utilities/logpush/index.js",
     "test": "set NODE_ENV=test&& mocha"
   },
   "dependencies": {
