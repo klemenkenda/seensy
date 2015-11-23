@@ -18,6 +18,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     // custom handler setup
     // add-measurement - get data from JSON, save store and add aggregators
     app.get(this.namespace + 'add-measurement', this.handleAddMeasurement.bind(this));
+    // add-measurement - get data from JSON, save store and add aggregators
+    app.post(this.namespace + 'add-measurement', this.handleAddMeasurementPost.bind(this));
     // add-measurement - get data from JSON, save store and update values
     app.get(this.namespace + 'add-measurement-update', this.handleAddMeasurementUpdate.bind(this));
     // add-measurement - get data from JSON, save store and add aggregators
@@ -54,14 +56,14 @@ DataHandler.prototype.setupRoutesTest = function (app) {
 }
 
 /**
- * Parse data from request and send it to add measurements
+ * Parse data from GET request and send it to add measurements
  *
  * @param req  {model:express~Request}  Request
  * @param res  {model:express~Response}  Response
  */
 DataHandler.prototype.handleAddMeasurement = function (req, res) {
     logger.debug('[AddMeasurement] Start request handling');
-    logger.debug('[AddMeasurement] ' + req.query.data)
+    logger.debug('[AddMeasurement] ' + req.query.data);
     
     if (req.query.data == null || req.query.data == '') {
         res.status(200).send("No Data");
@@ -69,9 +71,32 @@ DataHandler.prototype.handleAddMeasurement = function (req, res) {
     }
 
     var data = JSON.parse(req.query.data);
-    
+
     this.addMeasurement(data);
     res.status(200).json({'done' : 'well'}).end();
+}
+
+/**
+ * Parse data from POST request and send it to add measurements
+ *
+ * Accepts a POST request of the content/type application/json with JSON formatted data in body
+ * 
+ * @param req  {model:express~Request}  Request
+ * @param res  {model:express~Response}  Response
+ */
+DataHandler.prototype.handleAddMeasurementPost = function (req, res) {
+    logger.debug('[AddMeasurement] Start request handling');
+    logger.debug('[AddMeasurement] ' + req.body[0]);
+    
+    if (req.body == null || req.body == '') {
+        res.status(200).send("No Data");
+        return;
+    }
+    
+    var data = req.body;
+    
+    this.addMeasurement(data);
+    res.status(200).json({ 'done' : 'well' }).end();
 }
 
 /**
