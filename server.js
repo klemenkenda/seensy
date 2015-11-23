@@ -7,10 +7,12 @@ function init() {
     var express = require('express');
     this.app = express();
     this.app.use(bodyParser.json({ limit: 10000000 }));
+    this.app.use(bodyParser.raw({ limit: 10000000 }));
+    this.app.use(bodyParser.text({ limit: 10000000 }));
 
     this.app.use(bodyParser.urlencoded({
         extended: true,
-        limit: 100000000
+        limit: '500kb'
     }));
 }
 
