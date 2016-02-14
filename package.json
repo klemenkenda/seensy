@@ -12,8 +12,9 @@
     "url": "https://github.com/klemenkenda/seensy"
   },
   "scripts": {
-    "start": "set NODE_ENV=development&& node seensy.js",    
-    "test": "set NODE_ENV=test&& mocha"
+    "start": "set NODE_ENV=development&& node seensy.js",
+    "test": "set NODE_ENV=test&& mocha",
+    "production":  "set NODE_ENV=production&& node seensy.js"
   },
   "dependencies": {
     "body-parser": "^1.14.0",
