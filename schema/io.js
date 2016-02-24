@@ -1,12 +1,19 @@
 var fs = require('qminer').fs;
+var fsnode = require('fs')
 var path = require('path');
 var logger = require('../modules/logger/logger.js');
-require('../server/handlers/config.js')
+var createBase = require('./create.js');
+var env = process.env.NODE_ENV || 'development';
+var config = require('../config.json')[env];
+var ncp = require('ncp').ncp;
+var rimraf = require('rimraf')
+var mkdirp = require('mkdirp');
+require('../server/handlers/config.js');
 
 var Utils = {};
 Utils.Sensor = require("../server/utils/sensor.js");
 
-exports.saveStreamAggrs = function (base, dir) {
+function saveStreamAggrs(base, dir) {
     var dataObj = [];
 
     // Default value is __dirname
@@ -44,7 +51,7 @@ exports.saveStreamAggrs = function (base, dir) {
     
 }
 
-exports.loadStreamAggrs = function (base, dir) {
+function loadStreamAggrs(base, dir) {
     // Default value is __dirname
     dir = typeof dir !== 'undefined' ? dir : __dirname;
 
@@ -104,3 +111,138 @@ exports.loadStreamAggrs = function (base, dir) {
     }
 
 };
+
+/**
+ * Close Base
+ *
+ * @param base  {module:qm~Base}    
+ */
+function closeBase(base) {
+    logger.info('[Main] Closing base ...');
+    
+    if (base != null) {
+        logger.info('[Main] Closing ...');
+        base.garbageCollect();
+        base.close();
+    }
+    
+    logger.info('[Main] Done!');
+}
+
+function getLatestBackup(dir){
+    function getDirectories(srcpath) {
+        return fsnode.readdirSync(srcpath).filter(function (file) {
+            return fsnode.statSync(path.join(srcpath, file)).isDirectory();
+        });
+    }
+    backups = getDirectories(dir);
+    var backup_id = 0;
+    for (var i = 0; i < backups.length; i++) {
+        var ii = parseInt(backups[i]);
+        if (ii > backup_id) backup_id = ii;
+    }
+    return backup_id;
+}
+
+/**
+ * Open base
+ *
+ * @param base  {module:qm~Base}    
+ */
+function openBase(open, startup) {
+    if (open == 'backup') {
+        // Find latest backup
+        var num = getLatestBackup(path.join(__dirname, './backup/'))
+        // Delete current db create new folder and copy backup into it
+        db_folder = path.join(__dirname, './db/');
+        backup_folder = path.join(__dirname, './backup/' + num + '/');
+        logger.debug('[Main] ' + backup_folder);
+        logger.debug('[Main] ' + db_folder);
+        rimraf(db_folder, function (err) {
+            logger.debug('[Main] ' + err);
+            mkdirp(db_folder, function (err) {
+                logger.debug('[Main] ' + err);
+                ncp(backup_folder, db_folder, function (err) {
+                    logger.debug('[Main] ' + err);
+                    var base = createBase.mode('open');
+                    loadStreamAggrs(base);
+                    logger.info('[Main] Loaded stream aggregates');
+                    
+                    startup(base);
+                    return base;
+                });
+            });
+        });
+
+    } else {
+        var base = createBase.mode(open);
+        if (open == 'open') {
+            loadStreamAggrs(base);
+            logger.info('[Main] Loaded stream aggregates');
+        }
+        startup(base);
+        return base;
+    }
+    
+}
+
+/**
+ * Shutdown main application
+ * 
+ * @param base  {module:qm~Base}
+ * @param app  {module:expressjs~App}
+ */
+function shutdown(base, server) {
+    logger.info('[Main] Initiating shutdown');
+    server.close(function () {  
+        logger.info('[Main] Closed remaining connection');
+        saveStreamAggrs(base);
+        logger.info('[Main] Saved stream aggregates')
+        closeBase(base);
+        logger.info('[Main] Base closed, shutdown...')
+        process.exit(0)
+    });
+}
+
+
+
+/**
+ * Backup the database
+ * 
+ * @param base  {module:qm~Base}
+ * @param app  {module:expressjs~App}
+ */
+function backup(base, server) {
+    // TODO: Send information about backup to the webserver
+    logger.info('[Main] Initiating backup');
+    server.close(function () {
+        logger.info('[Main] Closed connection');
+        saveStreamAggrs(base);
+        logger.info('[Main] Saved stream aggregates');
+        closeBase(base);
+        // Backup db files to another location
+        num = getLatestBackup(path.join(__dirname, './backup/'))
+        dest = path.join(__dirname, './backup/' + (num + 1) + '/');
+        source = path.join(__dirname, './db/');
+        logger.debug(source);
+        logger.debug(dest);
+        mkdirp(dest, function (err) {
+            logger.debug('[Main] ' + err);
+            ncp(source, dest, function (err) {
+                logger.debug('[Main] ' + err);
+                logger.info('[Main] Backup finished');
+                logger.info('[Main] Shutting down');
+                process.exit(0);
+            });
+        });
+    });
+}
+
+module.exports = {
+    closeBase: closeBase,
+    openBase: openBase,
+    backup: backup,
+    shutdown: shutdown,
+    loadStreamAggrs: loadStreamAggrs,
+    saveStreamAggrs: saveStreamAggrs,
+}
