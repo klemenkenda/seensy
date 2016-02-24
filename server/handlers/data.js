@@ -291,7 +291,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.handleGetAggregateStoreStructure = function (req, res) {
-    var aggregateStoreStr = "A" + Utils.Sensor.nameFriendly(req.query.sid);
+    var aggregateStoreStr = "A" + Utils.Sensor.nameFriendly(req.query.sensorName);
     var data = this.getAggregateStoreStructure(aggregateStoreStr);
     res.status(200).json(data);
 }

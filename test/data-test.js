@@ -96,17 +96,17 @@ describe('Data - REST API tests', function () {
         });
         
         // Get aggregate store structure
-        it('#GET ' + url + "/data/get-aggregate-store-structure?sid=test", function (done) {
+        it('#GET ' + url + "/data/get-aggregate-store-structure?sensorName=test", function (done) {
             request(url)
-                .get('/data/get-aggregate-store-structure?sid=test')
+                .get('/data/get-aggregate-store-structure?sensorName=test')
                 .set('Accept', 'application/json')
                 .expect(200, done);
         });
         
         // Get current aggregates
-        it('#GET ' + url + "/data/get-current-aggregates?sid=WWO-Turin-Italy-WWO-humidity", function (done) {
+        it('#GET ' + url + "/data/get-current-aggregates?sensorName=WWO-Turin-Italy-WWO-humidity", function (done) {
             request(url)
-                .get('/data/get-current-aggregates?sid=WWO-Turin-Italy-WWO-humidity')
+                .get('/data/get-current-aggregates?sensorName=WWO-Turin-Italy-WWO-humidity')
                 .set('Accept', 'application/json')
                 .expect(200, {
                 "Time": "2015-11-02T01:10:00.000",
@@ -538,17 +538,17 @@ describe('Data - REST API tests', function () {
             });
             
             // Get aggregate store structure
-            it('#GET ' + url + "/data/get-aggregate-store-structure?sid=test", function (done) {
+            it('#GET ' + url + "/data/get-aggregate-store-structure?sensorName=test", function (done) {
                 request(url)
-                .get('/data/get-aggregate-store-structure?sid=test')
+                .get('/data/get-aggregate-store-structure?sensorName=test')
                 .set('Accept', 'application/json')
                 .expect(200, done);
             });
             
             // Get current aggregates
-            it('#GET ' + url + "/data/get-current-aggregates?sid=WWO-Turin-Italy-WWO-humidity", function (done) {
+            it('#GET ' + url + "/data/get-current-aggregates?sensorName=WWO-Turin-Italy-WWO-humidity", function (done) {
                 request(url)
-                .get('/data/get-current-aggregates?sid=WWO-Turin-Italy-WWO-humidity')
+                .get('/data/get-current-aggregates?sensorName=WWO-Turin-Italy-WWO-humidity')
                 .set('Accept', 'application/json')
                 .expect(200, {
                     "Time": "2015-11-02T01:10:00.000",
