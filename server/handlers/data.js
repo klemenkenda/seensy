@@ -338,7 +338,7 @@ DataHandler.prototype.getAggregateStoreStructure = function (aggregateStoreStr) 
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.handleGetCurrentAggregates = function (req, res) {
-    var measurementStoreStr = "M" + Utils.Sensor.nameFriendly(req.query.sid);
+    var measurementStoreStr = "M" + Utils.Sensor.nameFriendly(req.query.sensorName);
     var measurementStore = this.base.store(measurementStoreStr);
     var data = this.getCurrentAggregates(measurementStore);
     res.status(200).json(data);

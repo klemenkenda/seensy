@@ -2,8 +2,8 @@
     "development": {
         "dataService": {
             "server": {
-				"root": "http://localhost:9611",
-                "port": 9611
+				"root": "http://localhost:9201",
+                "port": 9201
             }
         },
         "admins": {            
