@@ -23,6 +23,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.post(this.namespace + 'add-measurement', this.handleAddMeasurementPost.bind(this));
     // add-measurement - get data from JSON, save store and update values
     app.get(this.namespace + 'add-measurement-update', this.handleAddMeasurementUpdate.bind(this));
+    // add-measurement - get data from JSON, save store and update values
+    app.post(this.namespace + 'add-measurement-update', this.handleAddMeasurementUpdatePost.bind(this));
     // add-measurement - get data from JSON, save store and add aggregators
     app.get(this.namespace + 'add-measurement-no-control', this.handleAddMeasurementNoControl.bind(this));
     // get-aggregate-store-structure - get the definition of aggregate store
@@ -143,6 +145,28 @@ DataHandler.prototype.handleAddMeasurementUpdate = function (req, res) {
 }
 
 /**
+ * Parse data from POST request and send it to add measurements updating values if new
+ *
+ * Accepts a POST request of the content/type application/json with JSON formatted data in body
+ * 
+ * @param req  {model:express~Request}  Request
+ * @param res  {model:express~Response}  Response
+ */
+DataHandler.prototype.handleAddMeasurementUpdatePost = function (req, res) {
+    logger.debug('[AddMeasurement] Start request handling');
+    logger.debug('[AddMeasurement] ' + req.body["data"]);
+    
+    if (req.body == null || req.body == '') {
+        res.status(200).send("No Data");
+        return;
+    }
+    
+    var data = JSON.parse(req.body["data"]);        
+    this.addMeasurement(data, true, true);
+    res.status(200).json({ 'done' : 'well' }).end();
+}
+
+/**
  * Save node, type and measurements to the stores.
  * If measurement store does not exist create it, together with all aggregates.
  *
@@ -154,7 +178,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
     update = typeof update !== 'undefined' ? control : false;
     
     // Send to CEP
-    sendMeasurementToCEP(data);
+    // sendMeasurementToCEP(data);
 
     // Walk thru the data
     for (i = 0; i < data.length; i++) {
@@ -291,7 +315,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.handleGetAggregateStoreStructure = function (req, res) {
-    var aggregateStoreStr = "A" + Utils.Sensor.nameFriendly(req.query.sid);
+    var aggregateStoreStr = "A" + Utils.Sensor.nameFriendly(req.query.sensorName);
     var data = this.getAggregateStoreStructure(aggregateStoreStr);
     res.status(200).json(data);
 }
