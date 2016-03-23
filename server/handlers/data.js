@@ -23,6 +23,8 @@ DataHandler.prototype.setupRoutes = function (app) {
     app.post(this.namespace + 'add-measurement', this.handleAddMeasurementPost.bind(this));
     // add-measurement - get data from JSON, save store and update values
     app.get(this.namespace + 'add-measurement-update', this.handleAddMeasurementUpdate.bind(this));
+    // add-measurement - get data from JSON, save store and update values
+    app.post(this.namespace + 'add-measurement-update', this.handleAddMeasurementUpdatePost.bind(this));
     // add-measurement - get data from JSON, save store and add aggregators
     app.get(this.namespace + 'add-measurement-no-control', this.handleAddMeasurementNoControl.bind(this));
     // get-aggregate-store-structure - get the definition of aggregate store
@@ -138,6 +140,28 @@ DataHandler.prototype.handleAddMeasurementUpdate = function (req, res) {
     
     var data = JSON.parse(req.query.data);
     
+    this.addMeasurement(data, true, true);
+    res.status(200).json({ 'done' : 'well' }).end();
+}
+
+/**
+ * Parse data from POST request and send it to add measurements updating values if new
+ *
+ * Accepts a POST request of the content/type application/json with JSON formatted data in body
+ * 
+ * @param req  {model:express~Request}  Request
+ * @param res  {model:express~Response}  Response
+ */
+DataHandler.prototype.handleAddMeasurementUpdatePost = function (req, res) {
+    logger.debug('[AddMeasurement] Start request handling');
+    logger.debug('[AddMeasurement] ' + req.body["data"]);
+    
+    if (req.body == null || req.body == '') {
+        res.status(200).send("No Data");
+        return;
+    }
+    
+    var data = JSON.parse(req.body["data"]);        
     this.addMeasurement(data, true, true);
     res.status(200).json({ 'done' : 'well' }).end();
 }
