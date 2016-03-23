@@ -154,7 +154,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
     update = typeof update !== 'undefined' ? control : false;
     
     // Send to CEP
-    sendMeasurementToCEP(data);
+    // sendMeasurementToCEP(data);
 
     // Walk thru the data
     for (i = 0; i < data.length; i++) {
