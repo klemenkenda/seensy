@@ -11,6 +11,9 @@ qm.verbosity(0);
 
 // read input script argument for mode type. Default is "cleanCreate"
 var scriptArgs = (process.argv[2] == null) ? "cleanCreate" : process.argv[2];
+// read input script argument for instance type. Default is "data"
+var scriptType = (process.argv[3] == null) ? "data": process.argv[3];
+
 //var base = createBase.mode(scriptArgs);
 var base = baseIO.openBase(scriptArgs, startup);
 
@@ -19,15 +22,17 @@ function startup(base){
     server.init();
     
     // data module instance
-    var DataModule = require('./server/dataModule.js');
-    var dataModule = new DataModule(server.app, base);
-    dataModule.setupRoutes(server.app);
-    
-    // modeling module
-    // var ModelModule = require('./modelModule.js')
-    // var modelModule = new ModelModule()
-    // modelModule.setupRoutes(server.app)
-    
+    if (scriptType == "data") {
+        var DataModule = require('./server/dataModule.js');
+        var dataModule = new DataModule(server.app, base);
+        dataModule.setupRoutes(server.app);
+    } else {    
+        // modeling module
+        var ModelModule = require('./server/modelModule.js')
+        var modelModule = new ModelModule()
+        modelModule.setupRoutes(server.app)
+    }
+
     // schedule backup
     var j = schedule.scheduleJob({ hour: 00, minute: 00 }, function () {
     

@@ -14,6 +14,7 @@
   "scripts": {
     "start": "set NODE_ENV=development&& node seensy.js",
     "restart": "set NODE_ENV=development&& node seensy.js open",
+    "modelling": "set NODE_ENV=development&& node seensy.js cleanCreate modelling",
     "test": "set NODE_ENV=test&& mocha",
     "production":  "set NODE_ENV=production&& node seensy.js"
   },

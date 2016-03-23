@@ -1,23 +1,27 @@
+// general includes
 var qm = require('qminer');
 var logger = require('../modules/logger/logger.js');
 
-function DataManagement(t1) {
-    this.t = t1;
-    logger.info('DataManagement INIT');
+// include handlers
+var GeneralHandler = require('./handlers/general.js');
+var DataHandler = require('./handlers/data.js');
+var QMinerHandler = require('./handlers/qminer.js');
+var ModelHandler = require('./handlers/model.js');
+
+function ModelModule(app, base) {
+    logger.debug('Data Module - INIT');
+    this.generalHandler = new GeneralHandler(app);
+    this.qminerHandler = new QMinerHandler(app, base);
+    this.dataHandler = new DataHandler(app, base);
+    this.modelHandler = new ModelHandler(app);
 }
 
-DataManagement.prototype.handleTest1 = function (req, res) {
-    res.status(200).json({ message: "Test3" });
+ModelModule.prototype.setupRoutes = function (app) {
+    // handler's setups    
+    this.generalHandler.setupRoutes(app);
+    this.dataHandler.setupRoutes(app);
+    this.qminerHandler.setupRoutes(app);
+    this.modelHandler.setupRoutes(app);
 }
 
-DataManagement.prototype.handleTest2 = function (req, res) {
-    res.status(200).json({ message: "Test4" });
-}
-
-DataManagement.prototype.setupRoutes = function (app) {
-    app.get('/t3', this.handleTest1.bind(this));
-
-    app.get('/t4', this.handleTest2.bind(this));
-}
-
-module.exports = DataManagement;
+module.exports = ModelModule;
