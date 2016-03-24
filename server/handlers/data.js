@@ -436,10 +436,12 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
                 startDate = measurementStore.first.Date;
                 endDate = measurementStore.last.Date;
                 val = measurementStore.last.Val;
+                lastTs = measurementStore.last.Time;
             } else {
                 startDate = "0000-00-00";
                 endDate = "0000-00-00";
                 val = -999.999;
+                lastTs = 0
             }
             
             // Add sensor information
@@ -449,7 +451,8 @@ DataHandler.prototype.handleGetNodes = function (req, res) {
                 'UoM': sensorSet[j].Type.UoM,
                 'StartDate': startDate,
                 'EndDate': endDate,
-                'Val': val
+                'Val': val,
+                'LastTs': lastTs
             });
         }
         // Add node information
