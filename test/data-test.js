@@ -25,7 +25,7 @@ describe('Data - REST API tests', function () {
         base = new qm.Base({
             mode: 'createClean', 
             schemaPath: path.join(__dirname, '../schema/store.def'), // its more robust but, doesen't work from the console (doesent know __dirname)
-            dbPath: path.join(__dirname, './db'),
+            dbPath: path.join(__dirname, '../schema/db'),
         });        
         
         // init server
@@ -170,7 +170,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "%",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 0
+                            "Val": 0,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-humidity",
@@ -178,7 +179,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "%",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 53
+                            "Val": 53,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-precipMM",
@@ -186,7 +188,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "mm",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 0
+                            "Val": 0,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-pressure",
@@ -194,7 +197,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "mbar",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 1033
+                            "Val": 1033,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-temp_C",
@@ -202,7 +206,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "deg C",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 10
+                            "Val": 10,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-temp_F",
@@ -210,7 +215,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "deg F",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 50
+                            "Val": 50,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-visibility",
@@ -218,7 +224,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "km",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 10
+                            "Val": 10,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-weatherCode",
@@ -226,7 +233,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 113
+                            "Val": 113,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-winddirDegree",
@@ -234,7 +242,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "deg",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 15
+                            "Val": 15,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-windspeedKmph",
@@ -242,7 +251,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "km/h",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 1
+                            "Val": 1,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-windspeedMiles",
@@ -250,7 +260,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "mph",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 0
+                            "Val": 0,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         }
                     ]
                 }
@@ -284,7 +295,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "%",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 0
+                            "Val": 0,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-humidity",
@@ -292,7 +304,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "%",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 53
+                            "Val": 53,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-precipMM",
@@ -300,7 +313,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "mm",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 0
+                            "Val": 0,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-pressure",
@@ -308,7 +322,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "mbar",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 1033
+                            "Val": 1033,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-temp_C",
@@ -316,7 +331,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "deg C",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 10
+                            "Val": 10,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-temp_F",
@@ -324,7 +340,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "deg F",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 50
+                            "Val": 50,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-visibility",
@@ -332,7 +349,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "km",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 10
+                            "Val": 10,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-weatherCode",
@@ -340,7 +358,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 113
+                            "Val": 113,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-winddirDegree",
@@ -348,7 +367,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "deg",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 15
+                            "Val": 15,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-windspeedKmph",
@@ -356,7 +376,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "km/h",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 1
+                            "Val": 1,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         },
                         {
                             "Name": "WWO-Turin-Italy-WWO-windspeedMiles",
@@ -364,7 +385,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "mph",
                             "StartDate": "2015-11-02",
                             "EndDate": "2015-11-02",
-                            "Val": 0
+                            "Val": 0,
+                            "LastTs": "2015-11-02T01:10:00.000Z"
                         }
                     ]
                 },
@@ -381,7 +403,8 @@ describe('Data - REST API tests', function () {
                             "UoM": "r",
                             "StartDate": "2015-11-01",
                             "EndDate": "2015-11-03",
-                            "Val": 1
+                            "Val": 1,
+                            "LastTs": "2015-11-03T00:00:00.000Z"
                         }
                     ]
                 },            
@@ -474,7 +497,7 @@ describe('Data - REST API tests', function () {
             // Initialise base in clean create mode                   
             base = new qm.Base({
                 mode: 'open', 
-                dbPath: path.join(__dirname, './db'),
+                dbPath: path.join(__dirname, '../schema/db'),
             })
             baseIO.loadStreamAggrs(base, __dirname);
             
@@ -612,7 +635,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "%",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 0
+                                "Val": 0,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-humidity",
@@ -620,7 +644,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "%",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 53
+                                "Val": 53,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-precipMM",
@@ -628,7 +653,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "mm",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 0
+                                "Val": 0,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-pressure",
@@ -636,7 +662,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "mbar",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 1033
+                                "Val": 1033,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-temp_C",
@@ -644,7 +671,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "deg C",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 10
+                                "Val": 10,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-temp_F",
@@ -652,7 +680,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "deg F",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 50
+                                "Val": 50,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-visibility",
@@ -660,7 +689,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "km",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 10
+                                "Val": 10,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-weatherCode",
@@ -668,7 +698,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 113
+                                "Val": 113,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-winddirDegree",
@@ -676,7 +707,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "deg",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 15
+                                "Val": 15,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-windspeedKmph",
@@ -684,7 +716,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "km/h",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 1
+                                "Val": 1,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             },
                             {
                                 "Name": "WWO-Turin-Italy-WWO-windspeedMiles",
@@ -692,7 +725,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "mph",
                                 "StartDate": "2015-11-02",
                                 "EndDate": "2015-11-02",
-                                "Val": 0
+                                "Val": 0,
+                                "LastTs": "2015-11-02T01:10:00.000Z"
                             }
                         ]
                     },
@@ -709,7 +743,8 @@ describe('Data - REST API tests', function () {
                                 "UoM": "r",
                                 "StartDate": "2015-11-01",
                                 "EndDate": "1970-01-01",
-                                "Val": 1
+                                "Val": 1,
+                                "LastTs": "1970-01-01T00:00:00.000Z"
                             }
                         ]
                     }
