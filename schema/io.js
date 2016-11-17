@@ -195,14 +195,16 @@ function openBase(open, startup) {
  */
 function shutdown(base, server) {
     logger.info('[Main] Initiating shutdown');
-    server.close(function () {  
-        logger.info('[Main] Closed remaining connection');
-        saveStreamAggrs(base);
-        logger.info('[Main] Saved stream aggregates')
-        closeBase(base);
-        logger.info('[Main] Base closed, shutdown...')
-        process.exit(0)
-    });
+    
+    logger.info('[Main] Closed remaining connection');
+    saveStreamAggrs(base);
+    logger.info('[Main] Saved stream aggregates');
+    closeBase(base);
+    logger.info('[Main] Base closed, shutdown...');
+    
+    server.close(function() {
+        process.exit(1);
+    });    
 }
 
 
