@@ -23,8 +23,21 @@ Namespace: ```/data/```
 
 | Function                | Method | Parameters                           | Description                      |
 |:------------------------|:------:|:-------------------------------------|:---------------------------------|
-| add-measurement         | GET    | @JSON (streaming API format) data    | Adds measurements to the stores and calculates defined stream aggregates. |
-| add-measurement		  | POST   | Same as with GET					  | Same as with GET |
+| add-measurement         | GET/POST    | @JSON data                      | Adds measurements to the stores and calculates defined stream aggregates.     |
+| add-measurement-update  | GET/POST   | @JSON data					      | Adds measurements to the stores, updates old values. No streaming aggregates. |
+| add-measurement-no-control | GET | @ JSON data | TODO |
+| get-aggregate-store-structure |
+| get-current-aggregates |
+| get-nodes |
+| get-measurements |
+| n-get-measurement |
+| get-aggregate |
+| n-get-aggregate |
+| get-aggregates |
+| n-get-aggregates |
+| push-sync-stores |
+| add |
+
 
 ### QMiner
 Namespace: ```/qm/```
