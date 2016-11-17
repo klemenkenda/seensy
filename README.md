@@ -22,7 +22,7 @@ Namespace: (none)
 Namespace: ```/data/```
 
 | Function                | Method | Parameters                           | Description                      |
-|:-----------------------:|:------:|:------------------------------------:|:--------------------------------:|
+|:------------------------|:------:|:-------------------------------------|:---------------------------------|
 | add-measurement         | GET    | @JSON (streaming API format) data    | Adds measurements to the stores and calculates defined stream aggregates. |
 | add-measurement		  | POST   | Same as with GET					  | Same as with GET |
 
