@@ -234,8 +234,9 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
                     this.base.createStore([aggregateStoreDefinition]);
                     
                     // Add a tick
+                    var tickName = measurementStore.name + "tick";
                     measurementStore.addStreamAggr({
-                        name: "tick", type: "timeSeriesTick",
+                        name: tickName, type: "timeSeriesTick",
                         timestamp: "Time", value: "Val"
                     })
                     
@@ -243,7 +244,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
                     tickTimes.forEach(function (time) {
                         tickAggregates.forEach(function (aggregate) {
                             aggregateObj = {
-                                name: aggregate.name + time.name, type: aggregate.type, inAggr: "tick",
+                                name: measurementStore.name + aggregate.name + time.name, type: aggregate.type, inAggr: tickName,
                                 emaType: "previous", interval: time.interval * 60 * 60 * 1000 - 1, initWindow: 0 * 60 * 1000
                             };
                             measurementStore.addStreamAggr(aggregateObj);
@@ -252,7 +253,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
                     
                     // Adding winbuff based aggregates
                     bufTimes.forEach(function (time) {
-                        var bufname = 'winbuff' + time.name;
+                        var bufname = measurementStore.name + 'winbuff' + time.name;
                         // adding timeserieswinbuff aggregate
                         measurementStore.addStreamAggr({
                             name: bufname, type: "timeSeriesWinBuf",
@@ -261,7 +262,7 @@ DataHandler.prototype.addMeasurement = function (data, control, update){
                         
                         bufAggregates.forEach(function (aggregate) {
                             aggregateObj = {
-                                name: aggregate.name + time.name, type: aggregate.type, inAggr: bufname
+                                name: measurementStore.name + aggregate.name + time.name, type: aggregate.type, inAggr: bufname
                             };
                             measurementStore.addStreamAggr(aggregateObj);
                         })
@@ -366,6 +367,7 @@ DataHandler.prototype.getAggregateStoreStructure = function (aggregateStoreStr) 
  * @param res  {model:express~Response}  Response  
  */
 DataHandler.prototype.handleGetCurrentAggregates = function (req, res) {
+    if (req.query.sensorName == undefined) throw ("handleCurrentAggregates :: Sensor name missing!");
     var measurementStoreStr = "M" + Utils.Sensor.nameFriendly(req.query.sensorName);
     var measurementStore = this.base.store(measurementStoreStr);
     var data = this.getCurrentAggregates(measurementStore);
@@ -381,27 +383,28 @@ DataHandler.prototype.handleGetCurrentAggregates = function (req, res) {
 DataHandler.prototype.getCurrentAggregates = function(measurementStore) {
     var data = {};
     
-    data["Time"] = measurementStore.getStreamAggr("tick").val.Time;
+    var tickName = measurementStore.name + "tick";
+    data["Time"] = measurementStore.base.getStreamAggr(tickName).val.Time;
     data["Date"] = data["Time"].substring(0, 10);
     
     // adding last measurement
-    data["last-measurement"] = measurementStore.getStreamAggr("tick").val.Val;
+    data["last-measurement"] = measurementStore.base.getStreamAggr(tickName).val.Val;
     
     // adding tick-base aggregates
     tickTimes.forEach(function (time) {
         tickAggregates.forEach(function (aggregate) {
-            aggrname = aggregate.name + time.name;
-            aggrtype = aggregate.name;
-            data[aggrname] = measurementStore.getStreamAggr(aggrname).val.Val;
+            aggrShortName = aggregate.name + time.name;
+            aggrName =  measurementStore.name + aggrShortName;
+            data[aggrShortName] = measurementStore.base.getStreamAggr(aggrName).val.Val;
         })
     });
     
     // adding tick-base aggregates
     bufTimes.forEach(function (time) {
         bufAggregates.forEach(function (aggregate) {
-            aggrname = aggregate.name + time.name;
-            aggrtype = aggregate.name;
-            data[aggrname] = measurementStore.getStreamAggr(aggrname).val.Val;
+            aggrShortName = aggregate.name + time.name;
+            aggrName =  measurementStore.name + aggrShortName;
+            data[aggrShortName] = measurementStore.base.getStreamAggr(aggrName).val.Val;
         })
     });
     

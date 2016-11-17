@@ -1,4 +1,4 @@
-﻿var logger = require('./modules/logger/logger.js');
+var logger = require('./modules/logger/logger.js');
 var qm = require('qminer');
 var server = require('./server.js');
 var createBase = require('./schema/create.js');
@@ -34,9 +34,8 @@ function startup(base){
     }
 
     // schedule backup
-    var j = schedule.scheduleJob({ hour: 00, minute: 00 }, function () {
-    
-    });
+    // var j = schedule.scheduleJob({ hour: 00, minute: 00 }, function () {
+    // });
     
     // start server
     server.start(config.dataService.server.port);

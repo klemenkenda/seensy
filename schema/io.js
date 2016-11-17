@@ -32,7 +32,7 @@ function saveStreamAggrs(base, dir) {
             var fout = new fs.FOut(path.join(dir, './db/' + Utils.Sensor.nameFriendly(rec.Name) + '.bin'));
             // Write streamAggregate information to file
             aggrList.forEach(function (saName) {
-                var streamAggr = measurementStore.getStreamAggr(saName);
+                var streamAggr = measurementStore.base.getStreamAggr(saName);
                 streamAggr.save(fout);
             });
 
@@ -69,40 +69,41 @@ function loadStreamAggrs(base, dir) {
         var fIn = new fs.FIn(path.join(dir, './db/' + Utils.Sensor.nameFriendly(dataObj[i].sensorName) + '.bin'));
 
         // Add a tick
+        var tickName = measurementStore.name + "tick";
         measurementStore.addStreamAggr({
-            name: "tick", type: "timeSeriesTick",
+            name: tickName, type: "timeSeriesTick",
             timestamp: "Time", value: "Val"
         });
-        measurementStore.getStreamAggr("tick").load(fIn);
+        measurementStore.base.getStreamAggr(tickName).load(fIn);
 
         // Adding tick based aggregates
         tickTimes.forEach(function (time) {
             tickAggregates.forEach(function (aggregate) {
                 aggregateObj = {
-                    name: aggregate.name + time.name, type: aggregate.type, inAggr: "tick",
+                    name: measurementStore.name + aggregate.name + time.name, type: aggregate.type, inAggr: tickName,
                     emaType: "previous", interval: time.interval * 60 * 60 * 1000 - 1, initWindow: 0 * 60 * 1000
                 };
                 measurementStore.addStreamAggr(aggregateObj);
-                measurementStore.getStreamAggr(aggregateObj.name).load(fIn);
+                measurementStore.base.getStreamAggr(aggregateObj.name).load(fIn);
             });
         });
 
         // Adding winbuff based aggregates
         bufTimes.forEach(function (time) {
-            var bufname = 'winbuff' + time.name;
+            var bufname = measurementStore.name + 'winbuff' + time.name;
             // adding timeserieswinbuff aggregate
             measurementStore.addStreamAggr({
                 name: bufname, type: "timeSeriesWinBuf",
                 timestamp: "Time", value: "Val", winsize: time.interval * 60 * 60 * 1000 - 1
             });
-            measurementStore.getStreamAggr(bufname).load(fIn);
+            measurementStore.base.getStreamAggr(bufname).load(fIn);
             
             bufAggregates.forEach(function (aggregate) {
                 aggregateObj = {
-                    name: aggregate.name + time.name, type: aggregate.type, inAggr: bufname
+                    name: measurementStore.name + aggregate.name + time.name, type: aggregate.type, inAggr: bufname
                 };
                 measurementStore.addStreamAggr(aggregateObj);
-                measurementStore.getStreamAggr(aggregateObj.name).load(fIn);
+                measurementStore.base.getStreamAggr(aggregateObj.name).load(fIn);
             })
         });
         
@@ -194,14 +195,15 @@ function openBase(open, startup) {
  */
 function shutdown(base, server) {
     logger.info('[Main] Initiating shutdown');
-    server.close(function () {  
+    
+    server.close(function() {
         logger.info('[Main] Closed remaining connection');
         saveStreamAggrs(base);
-        logger.info('[Main] Saved stream aggregates')
+        logger.info('[Main] Saved stream aggregates');
         closeBase(base);
-        logger.info('[Main] Base closed, shutdown...')
-        process.exit(0)
-    });
+        logger.info('[Main] Base closed, shutdown...');
+        process.exit(0);
+    });    
 }
 
 

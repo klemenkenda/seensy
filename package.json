@@ -1,6 +1,6 @@
 {
   "name": "Seensy",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Seensy",
   "main": "seensy.js",
   "author": {
@@ -25,7 +25,7 @@
     "morgan": "^1.6.1",
     "ncp": "^2.0.0",
     "node-schedule": "^0.5.1",
-    "qminer": "^4.6.0",
+    "qminer": "^7.1.0",
     "request": "^2.62.0",
     "rimraf": "^2.4.3",
     "winston": "^1.0.1"
