@@ -51,8 +51,6 @@ function startup(base){
     
     // listen for INT signal e.g. Ctrl-C
     process.on('SIGINT', gracefulShutdown);
-    
-    process.on('beforeExit', function() { console.log("Test")});
 
     // TODO: Inform webserver this instance is up and running
 }
