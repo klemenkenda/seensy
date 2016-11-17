@@ -10,4 +10,4 @@ Energy related stream processing engine. It consumes streaming sensor data  and 
 
 For real-time or timeline coherent data stream aggregates are calculated online. API exposes all the raw and aggregated data (historic and realtime).
 
-For more data check our Wiki page at https://github.com/klemenkenda/seensy/wiki/Configuration.
+For more data check our Wiki page at https://github.com/klemenkenda/seensy/wiki.
