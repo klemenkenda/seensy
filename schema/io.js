@@ -214,7 +214,7 @@ function shutdown(base, server) {
  * @param base  {module:qm~Base}
  * @param app  {module:expressjs~App}
  */
-function backup(base, server) {
+function backup2(base, server) {
     // TODO: Send information about backup to the webserver
     logger.info('[Main] Initiating backup');
     server.close(function () {
@@ -236,6 +236,31 @@ function backup(base, server) {
                 logger.info('[Main] Shutting down');
                 process.exit(0);
             });
+        });
+    });
+}
+
+function backup(base, server) {
+    // TODO: Send information about backup to the webserver
+    logger.info('[Main] Initiating backup');
+    server.close();
+    logger.info('[Main] Closed connection');
+    saveStreamAggrs(base);
+    logger.info('[Main] Saved stream aggregates');
+    closeBase(base);
+    // Backup db files to another location
+    num = getLatestBackup(path.join(__dirname, './backup/'))
+    dest = path.join(__dirname, './backup/' + (num + 1) + '/');
+    source = path.join(__dirname, './db/');
+    logger.debug(source);
+    logger.debug(dest);
+    mkdirp(dest, function (err) {
+        if (err != null) logger.debug('[Main] ' + err);
+        ncp(source, dest, function (err) {
+            if (err != null) logger.debug('[Main] ' + err);
+            logger.info('[Main] Backup finished');
+            logger.info('[Main] Shutting down');
+            process.exit(0);
         });
     });
 }

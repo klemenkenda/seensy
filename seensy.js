@@ -24,7 +24,7 @@ function startup(base){
     // data module instance
     if (scriptType == "data") {
         var DataModule = require('./server/dataModule.js');
-        var dataModule = new DataModule(server.app, base);
+        var dataModule = new DataModule(server, base);
         dataModule.setupRoutes(server.app);
     } else {    
         // modeling module
